@@ -17,7 +17,7 @@ class EnsureAppSetupHasBeenCompleted
      */
     public function handle(Request $request, Closure $next)
     {
-        $setup_completed = Settings::where('name', 'setup_completed')->first();
+        $setup_completed = Settings::where('key', 'setup_completed')->first();
 
         if (boolval($setup_completed->value)) {
             return $next($request);
