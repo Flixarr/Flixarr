@@ -42,16 +42,16 @@ class Plex extends Model
         ];
     }
 
-    public function verifyExistingAuth()
-    {
-        $response = Http::withHeaders($this->headers)->get('https://plex.tv/api/v2/user');
+    // public function verifyExistingAuth()
+    // {
+    //     $response = Http::withHeaders($this->headers)->get('https://plex.tv/api/v2/user');
 
-        if ($response->status() === 200) {
-            return true;
-        }
+    //     if ($response->status() === 200) {
+    //         return true;
+    //     }
 
-        return false;
-    }
+    //     return false;
+    // }
 
     public function getAuthPin()
     {
@@ -80,14 +80,13 @@ class Plex extends Model
 
         $response = json_decode($response->body(), true);
 
-        // This has been commented out.. weird issue going on so we're just not going to check it.
-        // if (array_key_exists('authToken', $response)) {
-        //     return [
-        //         'status' => 'error',
-        //         'message' => 'There was an issue with the API. Please refresh the page and try again.',
-        //         'data' => $response,
-        //     ];
-        // }
+        if (!array_key_exists('authToken', $response)) {
+            return [
+                'status' => 'error',
+                'message' => 'There was an issue with the API. Please refresh the page and try again.',
+                'data' => $response,
+            ];
+        }
 
         if (!$response['authToken']) {
             return [

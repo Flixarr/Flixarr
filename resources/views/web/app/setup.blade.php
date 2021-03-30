@@ -5,17 +5,20 @@
         </div>
 
         <div class="space-y-2">
-            <h1 class="text-2xl font-bold">Welcome to {{config('app.name')}}</h1>
+            <h1 class="text-2xl font-bold">Welcome to {{ config('app.name') }}</h1>
             <p class="text-gray-600">Let's setup your new application!</p>
         </div>
 
-        <x-section.default title="Plex Setup" x-data="plexSetup()">
+        <x-section.default title="Plex Setup" x-data="plexSetup()" style="display: none">
             <div class="" x-show="showPlexSigninButton">
                 <x-form.button type="button" class="w-full" x-on:click="startPlexSignin" wire:loading.remove wire:target="verifyExistingAuth">Sign in with Plex</x-form.button>
-                <x-form.button type="button" class="w-full" wire:loading>Sign in with Plex</x-form.button>
             </div>
             <div class="space-y-4 relative" x-show="showPlexSetupSection">
-                <x-form.button type="button" class="w-full" wire:click="loadServers" x-show="showPlexLoadServersButton">Load Servers</x-form.button>
+                <div class="" x-show="showPlexLoadServersButton">
+                    <x-form.button type="button" class="w-full" x-on:click="loadServers" x-show="!plexLoadServersStarted">Load Servers</x-form.button>
+                    <x-util.loading.spinner x-show="plexLoadServersStarted" />
+                </div>
+
 
                 <fieldset class="block">
                     <legend class="sr-only">
@@ -34,23 +37,23 @@
                             </label>
                         </div>
 
-                        @foreach($plexServers as $key => $server)
-                        <div class="border border-gray-900 flex w-full" @if($server['online']) x-on:click="plexSetupType = ''" @endif>
-                            <div class="flex items-center h-5 mt-1">
-                                <input id="server-{{$key}}" name="servers" type="radio" class="h-4 w-4 text-primary-500 cursor-pointer border-gray-700 bg-gray-800 focus:ring-gray-900 focus:ring-offset-gray-900" {{ $server['online'] ? '' : 'disabled' }}>
-                            </div>
-                            <label for="server-{{$key}}" class="ml-3 flex flex-col cursor-pointer w-full">
-                                <div class="flex items-center space-x-2 font-medium">
-                                    @if($server['online'])
-                                    <span class="bg-green-700 h-2 w-2 rounded-full mt-1"></span>
-                                    @else
-                                    <span class="bg-red-700 h-2 w-2 rounded-full mt-1"></span>
-                                    @endif
-                                    <span class="{{ $server['online'] ? 'text-white' : 'text-gray-500' }}"> {{$server['name']}} </span>
+                        @foreach ($plexServers as $key => $server)
+                            <div class="border border-gray-900 flex w-full" @if ($server['online']) x-on:click="plexSetupType = ''" @endif>
+                                <div class="flex items-center h-5 mt-1">
+                                    <input id="server-{{ $key }}" name="servers" type="radio" class="h-4 w-4 text-primary-500 cursor-pointer border-gray-700 bg-gray-800 focus:ring-gray-900 focus:ring-offset-gray-900" {{ $server['online'] ? '' : 'disabled' }}>
                                 </div>
-                                <span class="block text-gray-600 text-sm">{{$server['host']}}:{{$server['port']}} [{{$server['type']}}]</span>
-                            </label>
-                        </div>
+                                <label for="server-{{ $key }}" class="ml-3 flex flex-col cursor-pointer w-full">
+                                    <div class="flex items-center space-x-2 font-medium">
+                                        @if ($server['online'])
+                                            <span class="bg-green-700 h-2 w-2 rounded-full mt-1"></span>
+                                        @else
+                                            <span class="bg-red-700 h-2 w-2 rounded-full mt-1"></span>
+                                        @endif
+                                        <span class="{{ $server['online'] ? 'text-white' : 'text-gray-500' }}"> {{ $server['name'] }} </span>
+                                    </div>
+                                    <span class="block text-gray-600 text-sm">{{ $server['host'] }}:{{ $server['port'] }} [{{ $server['type'] }}]</span>
+                                </label>
+                            </div>
                         @endforeach
 
                     </div>
@@ -77,7 +80,56 @@
             </div>
         </x-section.default>
 
-        <x-section.default title="Radarr Settings" x-data="">
+        <x-section.default title="Radarr Settings">
+
+        </x-section.default>
+
+        <x-section.default title="Sonarr Settings">
+
+        </x-section.default>
+        <x-section.default title="Radarr Settings">
+
+        </x-section.default>
+
+        <x-section.default title="Sonarr Settings">
+
+        </x-section.default>
+        <x-section.default title="Radarr Settings">
+
+        </x-section.default>
+
+        <x-section.default title="Sonarr Settings">
+
+        </x-section.default>
+        <x-section.default title="Radarr Settings">
+
+        </x-section.default>
+
+        <x-section.default title="Sonarr Settings">
+
+        </x-section.default>
+        <x-section.default title="Radarr Settings">
+
+        </x-section.default>
+
+        <x-section.default title="Sonarr Settings">
+
+        </x-section.default>
+        <x-section.default title="Radarr Settings">
+
+        </x-section.default>
+
+        <x-section.default title="Sonarr Settings">
+
+        </x-section.default>
+        <x-section.default title="Radarr Settings">
+
+        </x-section.default>
+
+        <x-section.default title="Sonarr Settings">
+
+        </x-section.default>
+        <x-section.default title="Radarr Settings">
 
         </x-section.default>
 
@@ -86,7 +138,7 @@
         </x-section.default>
 
         <div class="flex flex-col pb-4 w-full text-xs text-center text-gray-800">
-            <p>{{config('app.name')}} - {{config('app.version')}}</p>
+            <p>{{ config('app.name') }} - {{ config('app.version') }}</p>
             <p>Created by Marc Hershey</p>
         </div>
 
@@ -95,55 +147,63 @@
 </div>
 
 @push('scripts')
-<script>
-    var plexWindow;
+    <script>
+        var plexWindow;
 
-    function plexSetup() {
-        return {
-            showPlexSigninButton: @entangle('showPlexSigninButton')
-            , showPlexSetupSection: @entangle('showPlexSetupSection')
-            , showPlexLoadServersButton: @entangle('showPlexLoadServersButton')
-            , plexSetupType: @entangle('plexSetupType')
-            , toggle: @entangle('plexUseSSL')
-            , startPlexSignin() {
-                plexWindow = window.open('/loading', '_blank');
-                setPlexSigninWindowOpened();
+        function plexSetup() {
+            return {
+                showPlexSigninButton: @entangle('showPlexSigninButton'),
+                showPlexSetupSection: @entangle('showPlexSetupSection'),
+                plexLoadServersStarted: @entangle('plexLoadServersStarted'),
+                showPlexLoadServersButton: @entangle('showPlexLoadServersButton'),
+                plexSetupType: @entangle('plexSetupType'),
+                toggle: @entangle('plexUseSSL'),
+                startPlexSignin() {
+                    plexWindow = window.open('/loading', '_blank');
+                    setPlexSigninWindowOpened();
 
-                @this.getPlexAuthUrl().then(url => {
-                    if (url) {
-                        plexWindow.location = url;
-                        executePoll();
-                    }
-                })
+                    @this.getPlexAuthUrl().then(url => {
+                        if (url) {
+                            plexWindow.location = url;
+                            executePoll();
+                        }
+                    })
+                },
+                loadServers() {
+                    console.log('test')
+                },
             }
         }
-    }
 
-    function executePoll() {
-        @this.validatePlexPin().then(shouldValidateAgain => {
-            if (shouldValidateAgain) {
-                setTimeout(this.executePoll(), 1000)
-            } else {
-                closePlexWindow();
-            }
-        })
-    }
+        function executePoll() {
+            @this.validatePlexPin().then(shouldValidateAgain => {
+                if (shouldValidateAgain) {
+                    setTimeout(this.executePoll(), 1000)
+                } else {
+                    closePlexWindow();
+                }
+            })
+        }
 
-    function setPlexSigninWindowOpened() {
-        @this.plexWindowOpen = true;
+        function setPlexSigninWindowOpened() {
+            @this.plexWindowOpen = true;
 
-        var plexWindowStatus = setInterval(function() {
-            if (plexWindow.closed) {
-                closePlexWindow();
-                clearInterval(plexWindowStatus);
-            }
-        }, 1000);
-    }
+            var plexWindowStatus = setInterval(function() {
+                if (plexWindow.closed) {
+                    closePlexWindow();
+                    clearInterval(plexWindowStatus);
+                }
+            }, 1000);
+        }
 
-    function closePlexWindow() {
-        plexWindow.close();
-        @this.plexWindowOpen = false;
-    }
+        function closePlexWindow() {
+            plexWindow.close();
+            @this.plexWindowOpen = false;
+        }
 
-</script>
+        function loadPlexServers() {
+            console.log('test');
+        }
+
+    </script>
 @endpush

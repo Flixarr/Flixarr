@@ -4,24 +4,21 @@ namespace App\Http\Web\App;
 
 use App\Models\API\Plex;
 use Exception;
-use Illuminate\Support\Facades\Http;
 use Livewire\Component;
 
 class Setup extends Component
 {
     public $showPlexSigninButton;
     public $plexWindowOpen;
+    public $pinId;
     public $plexAuthCompleted;
-    public $showPlexLoadServersButton;
+
+    public $plexLoadServersStarted;
     public $showPlexSetupSection;
+    public $showPlexLoadServersButton;
     public $plexSetupType;
     public $plexUseSSL;
-
-    public $pinId;
-
     public $plexServers = [];
-
-    public $test;
 
     public function render()
     {
@@ -40,7 +37,7 @@ class Setup extends Component
 
     public function load()
     {
-        $this->verifyExistingAuth();
+        // $this->verifyExistingAuth();
     }
 
     public function verifyExistingAuth()
@@ -113,8 +110,14 @@ class Setup extends Component
         $this->showPlexSetupSection = true;
     }
 
+    public function setPlexLoadServersStarted()
+    {
+        $this->plexLoadServersStarted = true;
+    }
+
     public function loadServers()
     {
+
         $response = (new Plex)->getServers()['Server'];
 
         if (array_filter($response, 'is_array')) {
@@ -155,6 +158,7 @@ class Setup extends Component
         }
 
         $this->showPlexLoadServersButton = false;
+        $this->plexLoadServersStarted = false;
     }
 
 }
