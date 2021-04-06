@@ -13,9 +13,12 @@ class SigninButton extends Component
     // states
     public $signinLoading;
 
+    public $count;
+
     public function mount()
     {
         $this->signinLoading = false;
+        $this->count = 1;
     }
 
     public function render()
@@ -28,8 +31,12 @@ class SigninButton extends Component
         // Generate Auth Pin
         $this->pin = (new Plex)->authPin();
 
+        $this->dispatchBrowserEvent('consolelog', ['data' => $this->pin]);
+
         // Build Auth Url
         $plexAuthUrl = (new Plex)->authUrl($this->pin['code']);
+
+        $this->dispatchBrowserEvent('consolelog', ['data' => $plexAuthUrl]);
 
         return $plexAuthUrl;
     }
@@ -41,7 +48,7 @@ class SigninButton extends Component
         $this->dispatchBrowserEvent('consolelog', ['data' => $status]);
 
         if ($status['status'] === 'error') {
-            // $this->dispatchBrowserEvent('alert-error', ['title' => 'System Error', 'message' => $status['message']]);
+            $this->dispatchBrowserEvent('notify', ['type' => 'error', 'message' => 'Please refresh the page and try again...']);
             return 'error';
         }
 
@@ -51,7 +58,16 @@ class SigninButton extends Component
 
         if ($status['status'] === 'valid') {
             (new Plex)->saveAuthToken($status['data']['authToken']);
+            $this->dispatchBrowserEvent('notify', ['type' => 'success', 'message' => 'Successfully connected via Plex!']);
             return 'valid';
         }
+    }
+
+    public function completeSignin()
+    {
+        // save plex user details
+
+        // redirect
+        return redirect('/setup/plex/servers');
     }
 }

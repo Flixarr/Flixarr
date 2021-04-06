@@ -4,12 +4,12 @@ namespace App\Http\Controllers\Setup;
 
 use App\Http\Controllers\Controller;
 
-class AppSetupSigninController extends Controller
+class PlexSigninController extends Controller
 {
     //
 
     public function view()
     {
-        return view('web.setup.app-setup');
+        return view('web.setup.plex-signin');
     }
 }

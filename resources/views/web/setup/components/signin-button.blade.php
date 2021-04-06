@@ -1,4 +1,5 @@
 <div class="h-10" x-data="plexSignin()">
+
     <button x-on:click="startSignin()" x-show="!signinLoading" class="w-full tablet:w-auto bg-blue-500 text-white font-bold rounded px-6 py-2 focus:outline-none">
         Sign in with Plex
     </button>
@@ -19,7 +20,7 @@
                 startSignin() {
                     @this.signinLoading = true;
 
-                    plexWindow = window.open('/setup/sign-in/loading')
+                    plexWindow = window.open('/loading')
 
                     @this.getPlexAuthUrl().then(url => {
                         if (url) {
@@ -48,8 +49,8 @@
 
                         if (status === 'valid') {
                             closePlexWindow()
+                            @this.completeSignin()
                         }
-
                         clearInterval(signinStatus)
                     }
                 })

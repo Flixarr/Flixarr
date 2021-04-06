@@ -34,7 +34,10 @@
         <main class="space-y-4 my-4">
             {{ $slot }}
         </main>
+
     </div>
+
+    <x-notification />
 
     {{-- Livewire Scripts --}}
     @livewireScripts
@@ -44,6 +47,7 @@
 
     {{-- Modals stack --}}
     @stack('modals')
+
 
     <script>
         window.addEventListener('consolelog', event => {

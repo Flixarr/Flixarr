@@ -6,10 +6,12 @@
             <p class="text-sm text-gray-600">Your new Plex Eco-system Manamgement System</p>
         </div>
 
-        <div class="bg-gray-800 text-center p-4 space-y-5 tablet:rounded">
-            <p>To get started, sign in with your Plex account!</p>
-            <div>
-                @livewire('setup.components.signin-button')
+        <div class="">
+            <div class="bg-gray-800 text-center p-4 space-y-5 tablet:rounded">
+                <p>Now let's connect your Plex server(s)...</p>
+                <div>
+                    @livewire('setup.components.load-servers')
+                </div>
             </div>
         </div>
     </div>

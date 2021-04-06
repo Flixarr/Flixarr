@@ -18,7 +18,7 @@ class Plex extends Model
     {
         $this->host = Settings::get('plex_host');
         $this->port = Settings::get('plex_port');
-        $this->token = Settings::get('plex_auth_token');
+        $this->token = Settings::get('plex_admin_authtoken');
         $clientId = Settings::get('plex_client_id');
 
         if ($clientId === null) {
@@ -42,6 +42,53 @@ class Plex extends Model
         ];
     }
 
+    public function call($path, $timeout = 5)
+    {
+        $url = $this->host . ':' . $this->port . $path;
+
+        return $this->xml2array(Http::timeout($timeout)->get($url, $this->headers));
+    }
+
+    public function plexCall($endpoint, $params = [], $type = 'get', $isXml = false)
+    {
+        $url = 'https://plex.tv' . $endpoint;
+
+        $response = Http::withHeaders($this->headers)->$type($url, $params);
+
+        if ($isXml) {
+            return $this->xml2array(Http::withHeaders($this->headers)->$type($url, $params));
+        }
+
+        return $response;
+    }
+
+    protected static function xml2array($xml)
+    {
+        self::normalizeSimpleXML(simplexml_load_string($xml), $result);
+        return $result;
+    }
+
+    protected static function normalizeSimpleXML($obj, &$result)
+    {
+        $data = $obj;
+        if (is_object($data)) {
+            $data = get_object_vars($data);
+        }
+        if (is_array($data)) {
+            foreach ($data as $key => $value) {
+                $res = null;
+                self::normalizeSimpleXML($value, $res);
+                if (($key == '@attributes') && ($key)) {
+                    $result = $res;
+                } else {
+                    $result[$key] = $res;
+                }
+            }
+        } else {
+            $result = $data;
+        }
+    }
+
     /**
      * Authentication
      *
@@ -50,7 +97,7 @@ class Plex extends Model
 
     public function authPin()
     {
-        return Http::withHeaders($this->headers)->post('https://plex.tv/api/v2/pins?strong=true')->json();
+        return $this->plexCall('/api/v2/pins', ['strong' => 'true'], 'post')->json();
     }
 
     public function authUrl($pinCode)
@@ -60,7 +107,9 @@ class Plex extends Model
 
     public function validatePin($pinId)
     {
-        $response = Http::withHeaders($this->headers)->get('https://plex.tv/api/v2/pins/' . $pinId);
+        // $response = Http::withHeaders($this->headers)->get('https://plex.tv/api/v2/pins/' . $pinId);
+
+        $response = $this->plexCall('/api/v2/pins/' . $pinId);
 
         if ($response->status() === 429) {
             return [
@@ -91,7 +140,7 @@ class Plex extends Model
         if ($response['authToken']) {
             return [
                 'status' => 'valid',
-                'message' => 'The Auth Pin is valid and has been claimed.',
+                'message' => 'The Auth Pin is valid and has been claimed successfully.',
                 'data' => $response,
             ];
         }
@@ -100,5 +149,23 @@ class Plex extends Model
     public function saveAuthToken($token)
     {
         Settings::set('plex_admin_authtoken', $token);
+    }
+
+    /**
+     * User Data
+     */
+
+    public function userServers()
+    {
+        // return Http::get('https://plex.tv/devices.xml', $this->headers)->body();
+        return $this->plexCall('/pms/servers.xml', ['includeLite' => '1'], 'get', true);
+    }
+
+    public function pingUserServers($host, $port)
+    {
+        $this->host = $host;
+        $this->port = $port;
+
+        return $this->call('/', 2);
     }
 }

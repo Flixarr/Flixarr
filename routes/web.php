@@ -2,25 +2,21 @@
 
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
+/**
+ * Util Routes
  */
+Route::get('/loading', function () {
+    return view('layouts.loading');
+});
 
+/**
+ * Setup Routes
+ */
 Route::prefix('setup')->group(function () {
-    Route::redirect('/', '/setup/sign-in');
-
-    Route::prefix('/sign-in')->group(function () {
-        Route::get('/', [App\Http\Controllers\Setup\AppSetupSigninController::class, 'view']);
-        Route::get('/loading', function () {
-            return 'loading...';
-        });
+    Route::redirect('/', '/setup/plex/sign-in');
+    Route::prefix('/plex')->group(function () {
+        Route::get('/sign-in', [App\Http\Controllers\Setup\PlexSigninController::class, 'view']);
+        Route::get('/servers', [App\Http\Controllers\Setup\PlexServersController::class, 'view']);
     });
 });
 
