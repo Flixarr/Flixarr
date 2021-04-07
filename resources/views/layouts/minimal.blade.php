@@ -19,11 +19,11 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
 </head>
 
-<body class="font-sans antialiased bg-gray-900 text-gray-400">
+<body class="font-sans antialiased bg-gray-900 text-white">
     <div class="absolute inset-0 bg-gray-900">
 
         {{-- Responsive State Indicator --}}
-        <div class="absolute top-0 bg-blue-500 text-white text-center text-xs">
+        <div class="absolute top-0 bg-blue-500 text-center text-xs">
             <div class="tablet:hidden">Phone</div>
             <div class="hidden tablet:block laptop:hidden">Tablet</div>
             <div class="hidden laptop:block desktop:hidden">Laptop</div>

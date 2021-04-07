@@ -2,8 +2,8 @@
 
     <div class="max-w-screen-tablet mx-auto space-y-10">
         <div class="text-center mt-28 px-4">
-            <h1 class="text-2xl tablet: text-white font-bold">Welcome to Flixarr!</h1>
-            <p class="text-sm text-gray-600">Your new Plex Eco-system Manamgement System</p>
+            <h1 class="text-2xl tablet: font-bold">Welcome to Flixarr!</h1>
+            <p class="text-sm text-muted">Your new Plex Eco-system Manamgement System</p>
         </div>
 
         <div class="">

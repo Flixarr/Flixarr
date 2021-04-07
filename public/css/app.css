@@ -748,6 +748,11 @@ select {
   outline: 1px auto -webkit-focus-ring-color;
 }
 
+.text-muted {
+  --tw-text-opacity: 1;
+  color: rgba(113, 113, 122, var(--tw-text-opacity));
+}
+
 .container {
   width: 100%;
 }

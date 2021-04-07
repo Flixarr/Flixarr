@@ -18,9 +18,9 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
 </head>
 
-<body class="font-sans antialiased bg-gray-900 text-gray-400">
+<body class="font-sans antialiased bg-gray-900 text-white">
     <div class="min-h-screen bg-gray-900">
-        <div class="bg-blue-500 text-white text-center text-xs">
+        <div class="bg-blue-500 text-center text-xs">
             {{-- <div class="block phone:hidden">Small Mobile</div>
             <div class="hidden phone:block tablet:hidden">Mobile</div> --}}
 
