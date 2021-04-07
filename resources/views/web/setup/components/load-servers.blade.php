@@ -128,7 +128,7 @@
                             <span class="">SSL</span>
                         </span>
                         <button type="button" class="bg-gray-900 relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-0" aria-pressed="false" x-ref="switch" x-state:on="Enabled" x-state:off="Not Enabled" :class="{ 'bg-blue-500': on }" aria-labelledby="annual-billing-label" :aria-pressed="on.toString()" @click="on = !on">
-                            <span class="sr-only">Use setting</span>
+                            <span class="sr-only">Turn on SSL</span>
                             <span aria-hidden="true" class="bg-white pointer-events-none inline-block h-5 w-5 rounded-full shadow transform ring-0 transition ease-in-out duration-200 translate-x-0" x-state:on="Enabled" x-state:off="Not Enabled" :class="{ 'translate-x-5 bg-blue-100': on, 'translate-x-0 bg-gray-800': !(on) }"></span>
                         </button>
                     </div>
