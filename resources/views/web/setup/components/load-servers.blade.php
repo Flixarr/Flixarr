@@ -35,7 +35,7 @@
                                     </div>
                                 </div>
                             @else
-                                <div class="flex flex-col tablet:flex-row tablet:items-center tablet:space-x-2 font-normal ml-5 block truncate text-left text-white w-full">
+                                <div class="flex flex-col tablet:flex-row tablet:items-center tablet:space-x-2 font-normal block truncate text-left text-white w-full">
                                     <span>
                                         Enter details manually
                                     </span>
