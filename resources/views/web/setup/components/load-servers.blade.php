@@ -105,14 +105,14 @@
             </div>
         </div>
         @if (!$selectedServer)
-            <div class="grid grid-cols-2 text-left gap-2">
-                <div class="col-span-2">
+            <div class="grid grid-cols-2 tablet:flex tablet:justify-items-stretch text-left gap-2">
+                <div class="col-span-2 tablet:col-span-1 flex-shrink-0">
                     <input type="text" class="relative w-full text-white bg-gray-900 border border-gray-900 rounded focus:outline-none focus:border-gray-600 focus:ring-0" placeholder="Hostname / IP Address">
                 </div>
                 <div class="">
                     <input type="text" class="relative w-24 text-white bg-gray-900 border border-gray-900 rounded pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:border-gray-600 focus:ring-0" placeholder="Port">
                 </div>
-                <div class="flex items-center justify-end">
+                <div class="flex items-center justify-end w-full">
                     <div class="flex items-center" x-data="{ on: false }">
                         <span class="mr-3" id="annual-billing-label" @click="on = !on; $refs.switch.focus()">
                             <span class="">SSL</span>
