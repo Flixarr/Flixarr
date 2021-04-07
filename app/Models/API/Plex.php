@@ -158,7 +158,7 @@ class Plex extends Model
     public function userServers()
     {
         // return Http::get('https://plex.tv/devices.xml', $this->headers)->body();
-        return $this->plexCall('/pms/servers.xml', ['includeLite' => '1'], 'get', true);
+        return $this->plexCall('/pms/servers.xml', [], 'get', true);
     }
 
     public function pingUserServers($host, $port)

@@ -19,6 +19,7 @@ class LoadServers extends Component
     {
         // $servers = collect([
         //     [
+        //         'id' => '68842555ca1a3940077affebf5f76125b94929d7',
         //         'name' => 'Marc\'s Media Server 1',
         //         'host' => '10.0.0.101',
         //         'port' => '32400',
@@ -26,6 +27,7 @@ class LoadServers extends Component
         //         'online' => true,
         //     ],
         //     [
+        //         'id' => '68842555ca1a3940077affebf5f76125b94929d7',
         //         'name' => 'Marc\'s Media Server 2 ',
         //         'host' => '74.134.17.177',
         //         'port' => '13991',
@@ -33,6 +35,7 @@ class LoadServers extends Component
         //         'online' => false,
         //     ],
         //     [
+        //         'id' => 'f744ee4b68923061ffd9e8180b4db81bd718d3b6',
         //         'name' => 'Marc\'s Media Server 3',
         //         'host' => '10.0.0.101',
         //         'port' => '32400',
@@ -40,6 +43,7 @@ class LoadServers extends Component
         //         'online' => true,
         //     ],
         //     [
+        //         'id' => 'f744ee4b68923061ffd9e8180b4db81bd718d3b6',
         //         'name' => 'Marc\'s Media Server 4',
         //         'host' => '74.134.17.177',
         //         'port' => '16179',
@@ -53,6 +57,8 @@ class LoadServers extends Component
 
     public function loadServers()
     {
+        $this->servers = [];
+
         $response = (new Plex)->userServers()['Server'];
 
         if (array_filter($response, 'is_array')) {
@@ -69,6 +75,7 @@ class LoadServers extends Component
                     'name' => $server['name'],
                     'host' => $server['localAddresses'],
                     'port' => '32400',
+                    'scheme' => $server['scheme'],
                     'type' => 'local',
                 ];
             }
@@ -80,6 +87,7 @@ class LoadServers extends Component
                     'name' => $server['name'],
                     'host' => $server['address'],
                     'port' => $server['port'],
+                    'scheme' => $server['scheme'],
                     'type' => 'remote',
                 ];
             }
