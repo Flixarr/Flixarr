@@ -105,7 +105,7 @@
             </div>
         </div>
         @if (!$selectedServer)
-            <div class="grid grid-cols-2 tablet:flex tablet:justify-items-stretch text-left gap-2">
+            <div class="grid grid-cols-2 tablet:flex tablet:justify-items-stretch text-left space-y-2 tablet:space-y-0 tablet:space-x-2">
                 <div class="col-span-2 tablet:col-span-1 flex-shrink-0">
                     <input type="text" class="relative w-full text-white bg-gray-900 border border-gray-900 rounded focus:outline-none focus:border-gray-600 focus:ring-0" placeholder="Hostname / IP Address">
                 </div>
