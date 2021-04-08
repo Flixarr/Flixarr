@@ -15,7 +15,7 @@ return [
     |
      */
 
-    'class_namespace' => 'App\\Http',
+    'class_namespace' => 'App\\Http\\Controllers',
 
     /*
     |--------------------------------------------------------------------------
@@ -27,7 +27,7 @@ return [
     |
      */
 
-    'view_path' => resource_path('views'),
+    'view_path' => resource_path('views/web'),
 
     /*
     |--------------------------------------------------------------------------
@@ -38,7 +38,8 @@ return [
     | the view returned by SomeComponent will be wrapped in "layouts.app"
     |
      */
-    'layout' => 'layouts.dashboard',
+
+    'layout' => 'layouts.app',
 
     /*
     |--------------------------------------------------------------------------

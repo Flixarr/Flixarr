@@ -18,7 +18,7 @@ class Plex extends Model
     {
         $this->host = Settings::get('plex_host');
         $this->port = Settings::get('plex_port');
-        $this->token = Settings::get('plex_auth_token');
+        $this->token = Settings::get('plex_admin_authtoken');
         $clientId = Settings::get('plex_client_id');
 
         if ($clientId === null) {
@@ -42,143 +42,6 @@ class Plex extends Model
         ];
     }
 
-    public function verifyExistingAuth()
-    {
-        $response = Http::withHeaders($this->headers)->get('https://plex.tv/api/v2/user');
-
-        if ($response->status() === 200) {
-            return true;
-        }
-
-        return false;
-    }
-
-    public function getAuthPin()
-    {
-        return Http::withHeaders($this->headers)->post('https://plex.tv/api/v2/pins?strong=true');
-    }
-
-    public function getAuthUrl($pinCode)
-    {
-        return 'https://app.plex.tv/auth#?clientID=' . $this->clientId . '&code=' . $pinCode . '&context[device][product]=' . config('app.name');
-    }
-
-    /**
-     * @return array with ['status'] and ['message']
-     */
-    public function validateAuthPin($pinId)
-    {
-        $response = Http::withHeaders($this->headers)->get('https://plex.tv/api/v2/pins/' . $pinId);
-
-        if ($response->status() === 429) {
-            return [
-                'status' => 'error',
-                'message' => 'You have reached the limit for the Plex API. Please wait 60 seconds then try again.',
-                'data' => $response->json(),
-            ];
-        }
-
-        $response = json_decode($response->body(), true);
-
-        // This has been commented out.. weird issue going on so we're just not going to check it.
-        // if (array_key_exists('authToken', $response)) {
-        //     return [
-        //         'status' => 'error',
-        //         'message' => 'There was an issue with the API. Please refresh the page and try again.',
-        //         'data' => $response,
-        //     ];
-        // }
-
-        if (!$response['authToken']) {
-            return [
-                'status' => 'invalid',
-                'message' => 'The Auth Pin was either invalid or not claimed yet.',
-                'data' => $response,
-            ];
-        }
-
-        if ($response['authToken']) {
-            return [
-                'status' => 'valid',
-                'message' => 'The Auth Pin is valid and has been claimed.',
-                'data' => $response,
-            ];
-        }
-    }
-
-    public function saveAuthToken($token)
-    {
-        Settings::set('plex_auth_token', $token);
-    }
-
-    public function getServers()
-    {
-        return $this->plexCall('/pms/servers.xml');
-    }
-
-    public function testServer($host, $port)
-    {
-        $this->host = $host;
-        $this->port = $port;
-
-        return $this->call('/', 2);
-    }
-
-    // -----------------------------------------------------------
-
-    public function signin()
-    {
-        //
-    }
-
-    public function generatePin()
-    {
-
-    }
-
-    public function users()
-    {
-        $request = $this->xml2array(Http::get("https://plex.tv/api/users", $this->headers));
-
-        return $request['User'];
-    }
-
-    public function verifyUserAccessViaId($id)
-    {
-        foreach ($this->users() as $plexUser) {
-            if ($id == $plexUser['id']) {
-                return $plexUser;
-            }
-        }
-
-        return false;
-    }
-
-    public function verifyUserAccessViaEmail($email)
-    {
-        foreach ($this->users() as $plexUser) {
-            if ($email == $plexUser['email']) {
-                return $plexUser;
-            }
-        }
-
-        return false;
-    }
-
-    public function getUserData($email, $password)
-    {
-        return Http::withHeaders([
-            'X-Plex-Client-Identifier' => 'Duplexer100',
-            'X-Plex-Product' => 'Duplexer',
-            'X-Plex-Version' => '1.0.0',
-        ])->asForm()->post('https://plex.tv/users/sign_in.json', [
-            'user[login]' => $email,
-            'user[password]' => $password,
-        ])->json();
-    }
-
-    // ----------
-
     public function call($path, $timeout = 5)
     {
         $url = $this->host . ':' . $this->port . $path;
@@ -186,11 +49,17 @@ class Plex extends Model
         return $this->xml2array(Http::timeout($timeout)->get($url, $this->headers));
     }
 
-    public function plexCall($endpoint, $params = [], $type = 'get')
+    public function plexCall($endpoint, $params = [], $type = 'get', $isXml = false)
     {
         $url = 'https://plex.tv' . $endpoint;
 
-        return $this->xml2array(Http::withHeaders($this->headers)->$type($url, $params));
+        $response = Http::withHeaders($this->headers)->$type($url, $params);
+
+        if ($isXml) {
+            return $this->xml2array(Http::withHeaders($this->headers)->$type($url, $params));
+        }
+
+        return $response;
     }
 
     protected static function xml2array($xml)
@@ -218,5 +87,85 @@ class Plex extends Model
         } else {
             $result = $data;
         }
+    }
+
+    /**
+     * Authentication
+     *
+     * Below are functions associated with authentication
+     */
+
+    public function authPin()
+    {
+        return $this->plexCall('/api/v2/pins', ['strong' => 'true'], 'post')->json();
+    }
+
+    public function authUrl($pinCode)
+    {
+        return 'https://app.plex.tv/auth#?clientID=' . $this->clientId . '&code=' . $pinCode . '&context[device][product]=' . config('app.name');
+    }
+
+    public function validatePin($pinId)
+    {
+        // $response = Http::withHeaders($this->headers)->get('https://plex.tv/api/v2/pins/' . $pinId);
+
+        $response = $this->plexCall('/api/v2/pins/' . $pinId);
+
+        if ($response->status() === 429) {
+            return [
+                'status' => 'error',
+                'message' => 'You have reached the limit for the Plex API. Please wait 60 seconds then try again.',
+                'data' => $response->json(),
+            ];
+        }
+
+        $response = json_decode($response->body(), true);
+
+        if (!array_key_exists('authToken', $response)) {
+            return [
+                'status' => 'error',
+                'message' => 'There was an issue with the API. Please refresh the page and try again.',
+                'data' => $response,
+            ];
+        }
+
+        if (!$response['authToken']) {
+            return [
+                'status' => 'notclaimed',
+                'message' => 'The Auth Pin has yet to be claimed.',
+                'data' => $response,
+            ];
+        }
+
+        if ($response['authToken']) {
+            return [
+                'status' => 'valid',
+                'message' => 'The Auth Pin is valid and has been claimed successfully.',
+                'data' => $response,
+            ];
+        }
+    }
+
+    public function saveAuthToken($token)
+    {
+        Settings::set('plex_admin_authtoken', $token);
+    }
+
+    /**
+     * User Data
+     */
+
+    public function userServers()
+    {
+        // return Http::get('https://plex.tv/devices.xml', $this->headers)->body();
+        return $this->plexCall('/pms/servers.xml', [], 'get', true);
+    }
+
+    public function pingUserServers($host, $port)
+    {
+        $this->host = $host;
+        $this->port = $port;
+
+        return $this->call('/', 2);
     }
 }

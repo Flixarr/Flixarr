@@ -13,22 +13,9 @@ return [
     | using this caching library. This connection is used when another is
     | not explicitly specified when executing a given caching function.
     |
-     */
+    */
 
     'default' => env('CACHE_DRIVER', 'file'),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Cache Remember Time
-    |--------------------------------------------------------------------------
-    |
-    | This option controls the default amount of time you would like data to
-    | be stored in the cache. Default: 24 hours (in seconds)
-    |
-     */
-
-    // 'remember_time' => 60 * 60 * 24,
-    'remember_time' => env('CACHE_TIME', 60 * 60 * 24),
 
     /*
     |--------------------------------------------------------------------------
@@ -42,7 +29,7 @@ return [
     | Supported drivers: "apc", "array", "database", "file",
     |            "memcached", "redis", "dynamodb", "null"
     |
-     */
+    */
 
     'stores' => [
 
@@ -112,8 +99,8 @@ return [
     | be other applications utilizing the same cache. So, we'll specify a
     | value to get prefixed to all our keys so we can avoid collisions.
     |
-     */
+    */
 
-    'prefix' => env('CACHE_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_') . '_cache'),
+    'prefix' => env('CACHE_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_cache'),
 
 ];
