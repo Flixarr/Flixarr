@@ -8,8 +8,8 @@
 
     <div x-data="serverDropdown()" wire:loading.remove wire:target="loadServers" class="space-y-6">
         <div class="space-y-1">
-            <div wire:click="loadServers" class="text-right">
-                <button class="text-xs text-muted focus:outline-none">Refresh server list</button>
+            <div class="text-right">
+                <button wire:click="loadServers" class="text-xs text-muted focus:outline-none">Refresh server list</button>
             </div>
             <div class="mt-1 relative">
                 <button x-on:click="open" type="button" class="relative w-full bg-gray-900 border border-gray-900 rounded pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:border-gray-600" aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label">
@@ -88,7 +88,7 @@
                                         {{ $server['name'] }}
                                     </span>
                                     <span class="text-xs">
-                                        {{ $server['host'] }}:{{ $server['port'] }} - {{ $server['type'] }}
+                                        {{ $server['scheme'] }}://{{ $server['host'] }}:{{ $server['port'] }} - {{ $server['type'] }}
                                     </span>
                                 </div>
                             </div>
@@ -106,11 +106,14 @@
         </div>
         @if (!$selectedServer)
             <div class="grid grid-cols-2 tablet:flex tablet:justify-items-stretch text-left space-y-2 tablet:space-y-0 tablet:space-x-2">
-                <div class="col-span-2 tablet:col-span-1 flex-shrink-0">
-                    <input type="text" class="relative w-full text-white bg-gray-900 border border-gray-900 rounded focus:outline-none focus:border-gray-600 focus:ring-0" placeholder="Hostname / IP Address">
+                <div class="col-span-2 tablet:col-span-1 flex-shrink-0 tablet:w-1/2">
+                    <div class="flex items-center bg-gray-900 rounded border border-transparent focus-within:ring-1 focus-within:ring-gray-600 overflow-hidden">
+                        <span class="pl-2 text-muted">http://</span>
+                        <input type="text" class="relative w-full pl-0 py-2 text-white bg-gray-900 border-0 focus:outline-none focus:border-transparent focus:ring-0" placeholder="192.168.0.100">
+                    </div>
                 </div>
                 <div class="">
-                    <input type="text" class="relative w-24 text-white bg-gray-900 border border-gray-900 rounded pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:border-gray-600 focus:ring-0" placeholder="Port">
+                    <input type="text" class="relative w-24 text-white py-2 bg-gray-900 border border-transparent rounded focus:outline-none focus:border-transparent focus:ring-1 focus:ring-gray-600" placeholder="32400">
                 </div>
                 <div class="flex items-center justify-end w-full">
                     <div class="flex items-center" x-data="{ on: false }">
