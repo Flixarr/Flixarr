@@ -126,6 +126,10 @@
                 </div>
             </div>
         @endif
+
+        <div class="tablet:flex justify-end">
+            <button class="w-full tablet:w-auto bg-blue-500 text-white font-bold rounded px-6 py-2 focus:outline-none">Continue</button>
+        </div>
     </div>
 
 </div>
