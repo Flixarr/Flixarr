@@ -20,8 +20,10 @@ Route::prefix('setup')->group(function () {
     });
 });
 
-Route::get('/', function () {
-    return view('welcome');
+Route::middleware(['setup'])->group(function () {
+    Route::get('/', function () {
+        return view('welcome');
+    });
 });
 
 Route::get('/dashboard', function () {
