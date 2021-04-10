@@ -3,7 +3,7 @@
         remove() {
             this.notifications.splice(0, 1)
         },
-    }" @notify.window="console.log($event.detail); let notification = $event.detail; notifications.push(notification); setTimeout(() => { remove() }, 3500)" class="fixed inset-0 flex flex-col items-center tablet:items-end justify-end tablet:justify-start px-4 py-6 pointer-events-none space-y-4">
+    }" @notify.window="console.log(($event.detail.console == undefined) ? $event.detail : $event.detail.console); let notification = $event.detail; notifications.push(notification); setTimeout(() => { remove() }, 3500)" class="fixed inset-0 flex flex-col items-center tablet:items-end justify-end tablet:justify-start px-4 py-6 pointer-events-none space-y-4">
     <template x-for="(notification, notificationIndex) in notifications" :key="notificationIndex" hidden>
         <div class="max-w-sm w-full bg-gray-800 shadow-lg rounded-lg pointer-events-auto" x-transition:enter="transform ease-out duration-300 transition" x-transition:enter-start="translate-y-8 opacity-0 tablet:translate-y-0 tablet:translate-x-8" x-transition:enter-end="translate-y-0 opacity-100 tablet:translate-x-0" x-transition:leave="transform ease-out duration-300 transition" x-transition:leave-start="translate-y-0 opacity-100 tablet:translate-x-0" x-transition:leave-end="translate-y-8 opacity-0 tablet:translate-y-0 tablet:translate-x-8">
             <div class="rounded-lg shadow-xs overflow-hidden">
