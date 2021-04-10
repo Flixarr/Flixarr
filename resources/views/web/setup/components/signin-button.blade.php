@@ -21,7 +21,7 @@
                 button: @entangle('showSigninButton'),
                 loading: @entangle('showLoadingIcon'),
                 startSignin() {
-                    @this.showLoadingIcon = true
+                    @this.loading(true);
                     plexWindow = window.open('/loading')
                     @this.getPlexAuthUrl().then(url => {
                         if (url) {
@@ -41,11 +41,9 @@
                 }
                 @this.validatePlexPin().then(status => {
                     if (status != 'notclaimed') {
-                        if (status === 'error') {
-                            alert("There was an error. Try again.")
-                        }
-                        if (status === 'valid') {
+                        if (status === 'claimed') {
                             closePlexWindow()
+                            @this.signinCompleted()
                         }
                         clearInterval(signinStatus)
                     }

@@ -162,7 +162,7 @@ class Plex extends Model
 
         if ($response['authToken']) {
             return [
-                'status' => 'valid',
+                'status' => 'claimed',
                 'message' => 'The Auth Pin is valid and has been claimed successfully.',
                 'data' => $response,
             ];
@@ -170,17 +170,12 @@ class Plex extends Model
     }
 
     /**
-     * Saves the admins plex auth token
+     * Saves the users plex profile
      */
-    public function saveAuthToken($token)
+    public function getUserProfile()
     {
-        Settings::set('plex_authToken', $token);
+        return $this->plexCall('/api/v2/user')->json();
     }
-
-    // public function savePlexConfig($host, $port, $scheme,)
-    // {
-    //     Settings::set('plex_host', $host)
-    // }
 
     /**
      * User Data

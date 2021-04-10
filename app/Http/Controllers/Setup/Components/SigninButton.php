@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Setup\Components;
 
 use App\Models\API\Plex;
+use App\Models\Settings;
 use Livewire\Component;
 
 class SigninButton extends Component
@@ -78,10 +79,10 @@ class SigninButton extends Component
             return 'notclaimed';
         }
 
-        if ($status['status'] === 'valid') {
-            (new Plex)->saveAuthToken($status['data']['authToken']);
-            $this->dispatchBrowserEvent('notify', ['type' => 'success', 'message' => 'Successfully connected via Plex! Downloading Plex Profile...']);
-            return 'valid';
+        if ($status['status'] === 'claimed') {
+            Settings::set('plex_authToken', $status['data']['authToken']);
+            $this->dispatchBrowserEvent('notify', ['type' => 'success', 'message' => 'Successfully signed in! Redirecting...']);
+            return 'claimed';
         }
     }
 
@@ -92,9 +93,7 @@ class SigninButton extends Component
 
     public function signinCompleted()
     {
-        // save plex user details
-
-        // redirect
+        sleep(3);
         return redirect('/setup/plex/servers');
     }
 }
