@@ -3,6 +3,7 @@
 namespace App\Models\API;
 
 use App\Models\Settings;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Http;
 
@@ -18,7 +19,7 @@ class Plex extends Model
     {
         $this->host = Settings::get('plex_host');
         $this->port = Settings::get('plex_port');
-        $this->token = Settings::get('plex_admin_authtoken');
+        $this->token = Settings::get('plex_authToken', false);
         $clientId = Settings::get('plex_client_id');
 
         if ($clientId === null) {
@@ -56,7 +57,7 @@ class Plex extends Model
         $response = Http::withHeaders($this->headers)->$type($url, $params);
 
         if ($isXml) {
-            return $this->xml2array(Http::withHeaders($this->headers)->$type($url, $params));
+            $response = $this->xml2array($response->body());
         }
 
         return $response;
@@ -95,16 +96,38 @@ class Plex extends Model
      * Below are functions associated with authentication
      */
 
+    /**
+     * Returns true if existing token is valid, false if it's not
+     */
+    public function verifyExistingAuth()
+    {
+        if ($this->token) {
+            $status = $this->plexCall('/api/v2/user')->status();
+            return ($status === 200) ? true : false;
+        }
+
+        return false;
+    }
+
+    /**
+     * Returns an auth pin
+     */
     public function authPin()
     {
         return $this->plexCall('/api/v2/pins', ['strong' => 'true'], 'post')->json();
     }
 
+    /**
+     * Returns a plex signin url
+     */
     public function authUrl($pinCode)
     {
         return 'https://app.plex.tv/auth#?clientID=' . $this->clientId . '&code=' . $pinCode . '&context[device][product]=' . config('app.name');
     }
 
+    /**
+     * Validates the auth pin
+     */
     public function validatePin($pinId)
     {
         // $response = Http::withHeaders($this->headers)->get('https://plex.tv/api/v2/pins/' . $pinId);
@@ -146,10 +169,18 @@ class Plex extends Model
         }
     }
 
+    /**
+     * Saves the admins plex auth token
+     */
     public function saveAuthToken($token)
     {
-        Settings::set('plex_admin_authtoken', $token);
+        Settings::set('plex_authToken', $token);
     }
+
+    // public function savePlexConfig($host, $port, $scheme,)
+    // {
+    //     Settings::set('plex_host', $host)
+    // }
 
     /**
      * User Data

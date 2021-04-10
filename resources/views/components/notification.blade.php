@@ -3,9 +3,9 @@
         remove() {
             this.notifications.splice(0, 1)
         },
-    }" @notify.window="console.log($event.detail); let notification = $event.detail; notifications.push(notification); setTimeout(() => { remove() }, 2500)" class="fixed inset-0 flex flex-col items-center tablet:items-end justify-end tablet:justify-start px-4 py-6 pointer-events-none space-y-4">
+    }" @notify.window="console.log($event.detail); let notification = $event.detail; notifications.push(notification); setTimeout(() => { remove() }, 3500)" class="fixed inset-0 flex flex-col items-center tablet:items-end justify-end tablet:justify-start px-4 py-6 pointer-events-none space-y-4">
     <template x-for="(notification, notificationIndex) in notifications" :key="notificationIndex" hidden>
-        <div x-transition:enter="transform ease-out duration-300 transition" x-transition:enter-start="translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2" x-transition:enter-end="translate-y-0 opacity-100 sm:translate-x-0" x-transition:leave="" x-transition:leave-start="" x-transition:leave-end="" class="max-w-xs w-full bg-gray-800 shadow-lg rounded-lg pointer-events-auto">
+        <div class="max-w-sm w-full bg-gray-800 shadow-lg rounded-lg pointer-events-auto" x-transition:enter="transform ease-out duration-300 transition" x-transition:enter-start="translate-y-8 opacity-0 tablet:translate-y-0 tablet:translate-x-8" x-transition:enter-end="translate-y-0 opacity-100 tablet:translate-x-0" x-transition:leave="transform ease-out duration-300 transition" x-transition:leave-start="translate-y-0 opacity-100 tablet:translate-x-0" x-transition:leave-end="translate-y-8 opacity-0 tablet:translate-y-0 tablet:translate-x-8">
             <div class="rounded-lg shadow-xs overflow-hidden">
                 <div class="p-4">
                     <div class="flex items-center">
@@ -18,7 +18,7 @@
                             </svg>
                         </div>
                         <div class="ml-3 flex-1 pt-0.5">
-                            <p x-text="notification.message" class="text-sm leading-5 font-medium"></p>
+                            <p x-text="notification.message" class="text-gray-300 text-sm leading-5 font-medium tracking-wide"></p>
                         </div>
                         <div class="ml-4 flex-shrink-0 flex">
                             <button @click="remove(notification)" class="inline-flex text-gray-400 focus:outline-none focus:text-gray-500 transition ease-in-out duration-150">

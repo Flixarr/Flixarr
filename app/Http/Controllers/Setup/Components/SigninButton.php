@@ -11,14 +11,13 @@ class SigninButton extends Component
     public $pin;
 
     // states
-    public $signinLoading;
-
-    public $count;
+    public $showSigninButton;
+    public $showLoadingIcon;
 
     public function mount()
     {
-        $this->signinLoading = false;
-        $this->count = 1;
+        $this->showSigninButton = false;
+        $this->showLoadingIcon = true;
     }
 
     public function render()
@@ -26,8 +25,30 @@ class SigninButton extends Component
         return view('web.setup.components.signin-button');
     }
 
+    public function loading($bool)
+    {
+        $this->showLoadingIcon = $bool;
+        $this->showSigninButton = !$bool;
+    }
+
+    public function verifyExistingAuth()
+    {
+        $this->loading(true);
+
+        $validAuthExists = (new Plex)->verifyExistingAuth();
+
+        if ($validAuthExists) {
+            $this->signinCompleted();
+        } else {
+            $this->showLoadingIcon = false;
+            $this->showSigninButton = true;
+        }
+    }
+
     public function getPlexAuthUrl()
     {
+        $this->loading(true);
+
         // Generate Auth Pin
         $this->pin = (new Plex)->authPin();
 
@@ -49,6 +70,7 @@ class SigninButton extends Component
 
         if ($status['status'] === 'error') {
             $this->dispatchBrowserEvent('notify', ['type' => 'error', 'message' => 'Please refresh the page and try again...']);
+            $this->loading(false);
             return 'error';
         }
 
@@ -58,12 +80,17 @@ class SigninButton extends Component
 
         if ($status['status'] === 'valid') {
             (new Plex)->saveAuthToken($status['data']['authToken']);
-            $this->dispatchBrowserEvent('notify', ['type' => 'success', 'message' => 'Successfully connected via Plex!']);
+            $this->dispatchBrowserEvent('notify', ['type' => 'success', 'message' => 'Successfully connected via Plex! Downloading Plex Profile...']);
             return 'valid';
         }
     }
 
-    public function completeSignin()
+    public function plexWindowClosed()
+    {
+        $this->dispatchBrowserEvent('notify', ['type' => 'error', 'message' => 'The authentication window was closed. Try again.']);
+    }
+
+    public function signinCompleted()
     {
         // save plex user details
 
