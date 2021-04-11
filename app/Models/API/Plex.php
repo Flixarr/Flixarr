@@ -2,6 +2,7 @@
 
 namespace App\Models\API;
 
+use App\Models\PlexServer;
 use App\Models\Settings;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
@@ -11,22 +12,20 @@ class Plex extends Model
 {
     protected $host;
     protected $port;
+    protected $scheme;
     protected $token;
     protected $clientId;
     protected $headers;
 
     public function __construct()
     {
-        $this->host = Settings::get('plex_host');
-        $this->port = Settings::get('plex_port');
-        $this->token = Settings::get('plex_authToken', false);
-        $clientId = Settings::get('plex_client_id');
+        $plexServer = PlexServer::where('id', Settings::get('plex_server_id'))->get()->toArray()[0];
 
-        if ($clientId === null) {
-            $this->clientId = Settings::set('plex_client_id', config('app.name') . '-' . config('app.version'));
-        } else {
-            $this->clientId = $clientId;
-        }
+        $this->host = $plexServer['host'] ?? null;
+        $this->port = $plexServer['port'] ?? null;
+        $this->scheme = $plexServer['scheme'] ?? 'http';
+        $this->token = Settings::get('plex_authToken') ?? null;
+        $this->clientId = Settings::get('plex_client_id') ?? Settings::set('plex_client_id', config('app.name') . '-' . config('app.version'));
 
         $this->headers = [
             // 'Accept' => 'application/json',
@@ -45,7 +44,7 @@ class Plex extends Model
 
     public function call($path, $timeout = 5)
     {
-        $url = $this->host . ':' . $this->port . $path;
+        $url = $this->scheme . '://' . $this->host . ':' . $this->port . $path;
 
         return $this->xml2array(Http::timeout($timeout)->get($url, $this->headers));
     }
