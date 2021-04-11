@@ -21,8 +21,10 @@ Route::prefix('setup')->group(function () {
 });
 
 Route::middleware(['setup'])->group(function () {
-    Route::get('/', function () {
-        return view('welcome');
+    Route::redirect('/', '/discover');
+
+    Route::prefix('discover')->group(function () {
+        Route::name('discover')->get('/', [App\Http\Controllers\Discover\DiscoverController::class, 'view']);
     });
 });
 
