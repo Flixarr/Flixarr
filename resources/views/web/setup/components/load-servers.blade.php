@@ -6,8 +6,8 @@
         <span class="text-xs text-muted">This may take a while if you have a lot of servers...</span>
     </div>
 
-    <div x-data="serverDropdown()" wire:loading.remove wire:target="loadServers" class="space-y-6">
-        <div class="space-y-1">
+    <div wire:loading.remove wire:target="loadServers" class="space-y-6">
+        <div class="space-y-1" x-data="serverDropdown()">
             <div class="text-right">
                 <button wire:click="loadServers" class="text-xs text-muted focus:outline-none">Refresh server list</button>
             </div>
@@ -56,7 +56,7 @@
                     </span>
                 </button>
                 <ul x-show="isOpen()" x-on:click.away="close" class="z-20 absolute mt-1 w-full bg-gray-800 shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-10 overflow-auto focus:outline-none sm:text-sm" tabindex="-1" role="listbox" aria-labelledby="listbox-label" aria-activedescendant="listbox-option-3">
-                    <li x-on:click="clearSelectedServer()" class="cursor-default select-none relative py-2 pl-3 pr-9" id="listbox-option-0" role="option">
+                    <li x-on:click="clearSelectedServer()" class="cursor-default select-none relative py-2 pl-3 pr-9" role="option">
                         <div class="flex items-center" x-on:click="close">
                             <div class="flex flex-col tablet:flex-row tablet:items-center tablet:space-x-2 font-normal ml-5 block truncate text-left w-full">
                                 <span class="">
@@ -76,7 +76,7 @@
                         @endif
                     </li>
                     @foreach ($servers as $server)
-                        <li x-on:click="setSelectedServer('{{ $server['id'] }}', '{{ $server['type'] }}')" class="cursor-default select-none relative py-2 pl-3 pr-9" id="listbox-option-0" role="option">
+                        <li x-on:click="setSelectedServer('{{ $server['id'] }}', '{{ $server['type'] }}')" class="cursor-default select-none relative py-2 pl-3 pr-9" role="option">
                             <div class="flex items-center">
                                 @if ($server['online'])
                                     <span class="bg-green-500 flex-shrink-0 inline-block h-2 w-2 rounded-full" aria-hidden="true"></span>
@@ -107,31 +107,44 @@
         @if (!$selectedServer)
             <div class="grid grid-cols-2 tablet:flex tablet:justify-items-stretch text-left space-y-2 tablet:space-y-0 tablet:space-x-2">
                 <div class="col-span-2 tablet:col-span-1 flex-shrink-0 tablet:w-1/2">
-                    <div class="flex items-center bg-gray-900 rounded border border-transparent focus-within:ring-1 focus-within:ring-gray-600 overflow-hidden">
-                        <span class="pl-2 text-muted">http://</span>
-                        <input type="text" class="relative w-full pl-0 py-2 text-white bg-gray-900 border-0 focus:outline-none focus:border-transparent focus:ring-0" placeholder="192.168.0.100">
+                    <div class="flex items-center bg-gray-900 rounded border border-transparent focus-within:ring-1 focus-within:ring-gray-600 overflow-hidden {{ $errors->has('host') ? 'ring-1 ring-red-900' : '' }}">
+                        <span class="pl-2 text-muted">{{ $manualServer['scheme'] }}://</span>
+                        <input wire:model="manualServer.host" type="text" class="relative w-full pl-0 py-2 text-white bg-gray-900 border-0 focus:outline-none focus:border-transparent focus:ring-0" placeholder="192.168.0.100">
                     </div>
                 </div>
                 <div class="">
-                    <input type="text" class="relative w-24 text-white py-2 bg-gray-900 border border-transparent rounded focus:outline-none focus:border-transparent focus:ring-1 focus:ring-gray-600" placeholder="32400">
+                    <input wire:model="manualServer.port" type="text" class="relative w-24 text-white py-2 bg-gray-900 border border-transparent rounded focus:outline-none focus:border-transparent focus:ring-1 focus:ring-gray-600 {{ $errors->has('port') ? 'ring-1 ring-red-900' : '' }}" placeholder="32400">
                 </div>
                 <div class="flex items-center justify-end w-full">
-                    <div class="flex items-center" x-data="{ on: false }">
-                        <div class="flex flex-col mr-3 text-right" id="annual-billing-label" @click="on = !on; $refs.switch.focus()">
+                    <div class="flex items-center" x-data="manualServerScheme()" x-on:click="$wire.toggleManualServerScheme(); $refs.switch.focus()">
+                        <div class="flex flex-col mr-3 text-right">
                             <span class="">SSL</span>
                             <span class="text-xs text-muted">Use HTTPS</span>
                         </div>
-                        <button type="button" class="bg-gray-900 relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-0" aria-pressed="false" x-ref="switch" x-state:on="Enabled" x-state:off="Not Enabled" :class="{ 'bg-blue-500': on }" aria-labelledby="annual-billing-label" :aria-pressed="on.toString()" @click="on = !on">
+                        <button type="button" class="bg-gray-900 relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-0" aria-pressed="false" x-ref="switch" x-state:on="Enabled" x-state:off="Not Enabled" :class="{ 'bg-blue-500': isHttps() }" aria-labelledby="annual-billing-label" :aria-pressed="isHttps.toString()">
                             <span class="sr-only">Turn on SSL</span>
-                            <span aria-hidden="true" class="bg-white pointer-events-none inline-block h-5 w-5 rounded-full shadow transform ring-0 transition ease-in-out duration-200 translate-x-0" x-state:on="Enabled" x-state:off="Not Enabled" :class="{ 'translate-x-5 bg-blue-100': on, 'translate-x-0 bg-gray-800': !(on) }"></span>
+                            <span aria-hidden="true" class="bg-white pointer-events-none inline-block h-5 w-5 rounded-full shadow transform ring-0 transition ease-in-out duration-200 translate-x-0" x-state:on="Enabled" x-state:off="Not Enabled" :class="{ 'translate-x-5 bg-blue-100': isHttps(), 'translate-x-0 bg-gray-800': !(isHttps()) }"></span>
                         </button>
                     </div>
                 </div>
             </div>
         @endif
 
-        <div class="tablet:flex justify-end">
-            <button class="w-full tablet:w-auto bg-blue-500 text-white font-bold rounded px-6 py-2 focus:outline-none">Continue</button>
+        <div class="flex justify-between items-center space-x-6 text-gray-400">
+            <div class="text-xs text-left">
+                @if ($selectedServer && !$selectedServer['online'])
+                    <span class="text-muted"><strong>Note:</strong> The selected server is either offline or not reachable.</span>
+                @endif
+            </div>
+
+            <div class="tablet:flex justify-end">
+                <div class="">
+                    <div class="" wire:loading wire:target="saveServer">
+                        <x-loading />
+                    </div>
+                    <button wire:loading.remove wire:click="saveServer" class="w-full tablet:w-auto bg-blue-500 text-white font-bold rounded px-6 py-2 focus:outline-none">Continue</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -158,6 +171,15 @@
                 setSelectedServer(id, type) {
                     @this.setSelectedServer(id, type)
                     this.show = false
+                },
+            }
+        }
+
+        function manualServerScheme() {
+            return {
+                https: @entangle('manualServer.scheme'),
+                isHttps() {
+                    return this.https === 'https'
                 },
             }
         }

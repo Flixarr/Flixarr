@@ -29,7 +29,7 @@ class Plex extends Model
         }
 
         $this->headers = [
-            'Accept' => 'application/json',
+            // 'Accept' => 'application/json',
             'X-Plex-Platform' => 'Plex Web',
             'X-Plex-Platform-Version' => config('app.version'),
             'X-Plex-Provides' => 'Server',
@@ -114,7 +114,7 @@ class Plex extends Model
      */
     public function authPin()
     {
-        return $this->plexCall('/api/v2/pins', ['strong' => 'true'], 'post')->json();
+        return $this->plexCall('/api/v2/pins', ['strong' => 'true'], 'post', true);
     }
 
     /**
@@ -130,9 +130,7 @@ class Plex extends Model
      */
     public function validatePin($pinId)
     {
-        // $response = Http::withHeaders($this->headers)->get('https://plex.tv/api/v2/pins/' . $pinId);
-
-        $response = $this->plexCall('/api/v2/pins/' . $pinId);
+        $response = $this->plexCall('/api/v2/pins/' . $pinId, [], 'get', false);
 
         if ($response->status() === 429) {
             return [
@@ -142,7 +140,7 @@ class Plex extends Model
             ];
         }
 
-        $response = json_decode($response->body(), true);
+        $response = $this->xml2array($response->body());
 
         if (!array_key_exists('authToken', $response)) {
             return [
@@ -181,17 +179,60 @@ class Plex extends Model
      * User Data
      */
 
-    public function userServers()
+    public function userOwnedServers()
     {
         // return Http::get('https://plex.tv/devices.xml', $this->headers)->body();
-        return $this->plexCall('/pms/servers.xml', [], 'get', true);
+        $response = $this->plexCall('/pms/servers.xml', [], 'get', true);
+
+        // check for error
+        if (!isset($response['Server']) || isset($response['error'])) {
+            $error = 'There was an issue with Plex.';
+
+            if (isset($response['error'])) {
+                $error = $response['error'];
+            }
+            return [
+                'error' => $error,
+            ];
+
+        } else {
+            $response = $response['Server'];
+
+            // turn into multidimensional array
+            if (array_filter($response, 'is_array')) {
+                $servers = $response;
+            } else {
+                $servers[] = $response;
+            }
+
+            $filteredServers = collect($servers)->where('owned', '!=', 0)->toArray();
+
+            return $filteredServers;
+        }
     }
 
-    public function pingUserServers($host, $port)
+    public function isServerOnline($host, $port)
     {
         $this->host = $host;
         $this->port = $port;
 
-        return $this->call('/', 2);
+        try {
+            $this->call('/', 1);
+            return true;
+        } catch (\Exception$e) {
+            return false;
+        }
+    }
+
+    public function getServerDetails($host, $port)
+    {
+        $this->host = $host;
+        $this->port = $port;
+
+        try {
+            return $this->call('/servers', 1)['Server'];
+        } catch (\Exception$e) {
+            return false;
+        }
     }
 }

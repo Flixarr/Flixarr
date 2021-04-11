@@ -81,7 +81,7 @@ class SigninButton extends Component
 
         if ($status['status'] === 'claimed') {
             Settings::set('plex_authToken', $status['data']['authToken']);
-            $this->dispatchBrowserEvent('notify', ['type' => 'success', 'message' => 'Successfully signed in! Redirecting...']);
+            $this->dispatchBrowserEvent('notify', ['type' => 'success', 'message' => 'Successfully signed in!']);
             return 'claimed';
         }
     }
@@ -93,7 +93,7 @@ class SigninButton extends Component
 
     public function signinCompleted()
     {
-        sleep(3);
+        sleep(2);
         return redirect('/setup/plex/servers');
     }
 }
