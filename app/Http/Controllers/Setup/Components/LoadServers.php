@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Setup\Components;
 
 use App\Models\API\Plex;
 use App\Models\PlexServer;
+use App\Models\Settings;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 
@@ -163,6 +164,7 @@ class LoadServers extends Component
         $plexServer->scheme = $this->selectedServer['scheme'] ?? $this->manualServer['scheme'];
 
         if ($plexServer->save()) {
+            Settings::set('setup_plex_server_completed', 1);
             return redirect('/setup/app');
         }
     }
