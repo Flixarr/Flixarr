@@ -17,6 +17,10 @@ class SigninButton extends Component
 
     public function mount()
     {
+        if (Settings::get('setup_plex_auth_completed')) {
+            return redirect('/setup/plex/servers');
+        }
+
         $this->showSigninButton = false;
         $this->showLoadingIcon = true;
     }
@@ -93,6 +97,7 @@ class SigninButton extends Component
 
     public function signinCompleted()
     {
+        Settings::set('setup_plex_auth_completed', 1);
         sleep(2);
         return redirect('/setup/plex/servers');
     }
