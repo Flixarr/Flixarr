@@ -19,7 +19,7 @@ class Plex extends Model
 
     public function __construct()
     {
-        $plexServer = PlexServer::where('id', Settings::get('plex_server_id'))->get()->toArray()[0];
+        $plexServer = PlexServer::where('id', Settings::get('plex_server_id'))->first();
 
         $this->host = $plexServer['host'] ?? null;
         $this->port = $plexServer['port'] ?? null;
