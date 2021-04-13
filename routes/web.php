@@ -21,10 +21,10 @@ Route::prefix('setup')->group(function () {
 });
 
 Route::middleware(['setup'])->group(function () {
-    Route::redirect('/', '/discover');
+    Route::redirect('/', '/trending');
 
-    Route::prefix('discover')->group(function () {
-        Route::name('discover')->get('/', [App\Http\Controllers\Discover\DiscoverController::class, 'view']);
+    Route::prefix('trending')->group(function () {
+        Route::name('trending')->get('/', [App\Http\Controllers\Trending\TrendingController::class, 'view']);
     });
 });
 

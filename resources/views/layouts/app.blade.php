@@ -13,6 +13,7 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}?{{ rand() }}">
+    @livewireStyles
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}?{{ rand() }}" defer></script>
@@ -37,6 +38,26 @@
             {{ $slot }}
         </main>
     </div>
+
+
+    <x-notification />
+
+    {{-- Livewire Scripts --}}
+    @livewireScripts
+
+    {{-- Script stack --}}
+    @stack('scripts')
+
+    {{-- Modals stack --}}
+    @stack('modals')
+
+
+    <script>
+        window.addEventListener('consolelog', event => {
+            console.log(event.detail.data);
+        })
+
+    </script>
 </body>
 
 </html>
