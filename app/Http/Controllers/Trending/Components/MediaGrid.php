@@ -11,7 +11,7 @@ class MediaGrid extends Component
     public $type;
     public $page;
 
-    protected $listeners = ['setMediaType'];
+    protected $listeners = ['setMediaType', 'loadMore'];
 
     public function mount()
     {
@@ -26,13 +26,13 @@ class MediaGrid extends Component
 
     public function loadMedia()
     {
-        $this->media = (new Tmdb)->getMedia($this->type)['results'];
+        $this->media = (new Tmdb)->getTrending($this->type)['results'];
     }
 
     public function loadMore()
     {
         $this->page++;
-        $this->media = array_merge($this->media, (new Tmdb)->getTrendingMedia($this->type, $this->time, $this->page)['results']);
+        $this->media = array_merge($this->media, (new Tmdb)->getTrending($this->type, $this->page)['results']);
     }
 
     public function setMediaType($type)

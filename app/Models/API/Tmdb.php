@@ -28,15 +28,18 @@ class Tmdb extends Model
      * ======================================================================================
      */
 
-    public function getMedia(string $mediaType, array $mediaFilter = [])
+    /**
+     * Get the daily or weekly trending items
+     *
+     * @param string $mediaType The type of media (movie|tv|person)
+     */
+    public function getTrending(string $mediaType, int $pageNum = 1, string $timeWindow = 'day')
     {
-        switch ($mediaType) {
-            case 'movie':
-                if (!$mediaFilter) {
-                    return $this->call('/trending/movie/day');
-                }
-                break;
+        if (isset($pageNum)) {
+            $this->params['page'] = $pageNum;
         }
+
+        return $this->call('/trending/' . $mediaType . '/' . $timeWindow);
     }
 
     public function getTrendingMedia(string $type = 'all', string $time = 'day', int $page = 1)
