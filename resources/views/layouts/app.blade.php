@@ -20,11 +20,10 @@
 </head>
 
 <body class="font-sans antialiased bg-gray-900 text-white">
-    <div class="min-h-screen bg-gray-900">
-        <div class="bg-blue-500 text-center text-xs">
-            {{-- <div class="block phone:hidden">Small Mobile</div>
-            <div class="hidden phone:block tablet:hidden">Mobile</div> --}}
+    <div class="absolute inset-0 bg-gray-900">
 
+        {{-- Responsive State Indicator --}}
+        <div class="absolute top-0 bg-blue-500 text-center text-xs">
             <div class="tablet:hidden">Phone</div>
             <div class="hidden tablet:block laptop:hidden">Tablet</div>
             <div class="hidden laptop:block desktop:hidden">Laptop</div>
@@ -33,10 +32,16 @@
 
         @include('layouts.navigation')
 
-        <!-- Page Content -->
+        {{-- Page Content --}}
         <main class="space-y-4 my-4">
             {{ $slot }}
         </main>
+
+        {{-- Media Modal --}}
+        @livewire('components.media-modal')
+
+        {{-- Modals stack --}}
+        @stack('modals')
     </div>
 
 
@@ -47,10 +52,6 @@
 
     {{-- Script stack --}}
     @stack('scripts')
-
-    {{-- Modals stack --}}
-    @stack('modals')
-
 
     <script>
         window.addEventListener('consolelog', event => {

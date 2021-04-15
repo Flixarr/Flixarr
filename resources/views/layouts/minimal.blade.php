@@ -35,6 +35,8 @@
             {{ $slot }}
         </main>
 
+        {{-- Modals stack --}}
+        @stack('modals')
     </div>
 
     <x-notification />
@@ -44,10 +46,6 @@
 
     {{-- Script stack --}}
     @stack('scripts')
-
-    {{-- Modals stack --}}
-    @stack('modals')
-
 
     <script>
         window.addEventListener('consolelog', event => {

@@ -12,7 +12,7 @@
                         </div>
                     </div>
                 @else --}}
-                <div class="space-y-2">
+                <div class="space-y-2" wire:click="test({{ $item['id'] }})">
                     <div>
                         <img class="rounded" src="https://image.tmdb.org/t/p/w220_and_h330_face{{ $item['poster_path'] ?? $item['profile_path'] }}" loading="lazy">
                     </div>
@@ -34,7 +34,7 @@
         @endif
     </div>
 
-    <div class="justify-center w-full" wire:loading.flex>
+    <div class="justify-center w-full my-10" wire:loading.flex>
         <x-loading size="20" />
     </div>
 </div>

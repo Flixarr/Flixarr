@@ -42,9 +42,8 @@ class Tmdb extends Model
         return $this->call('/trending/' . $mediaType . '/' . $timeWindow);
     }
 
-    public function getTrendingMedia(string $type = 'all', string $time = 'day', int $page = 1)
+    public function getMedia(int $tmdbId)
     {
-        $this->params['page'] = $page;
-        return $this->call('/trending/' . $type . '/' . $time);
+        return $this->call('/movie/' . $tmdbId);
     }
 }

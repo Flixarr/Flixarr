@@ -40,4 +40,9 @@ class MediaGrid extends Component
         $this->type = $type;
         $this->loadMedia();
     }
+
+    public function test($id)
+    {
+        $this->emit('openMediaModal', $id);
+    }
 }
