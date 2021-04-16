@@ -1,7 +1,11 @@
 <x-app-layout>
 
-    @livewire('trending.components.filter')
+    <div class="my-5 space-y-5">
 
-    @livewire('trending.components.media-grid')
+        @livewire('trending.components.filter')
+
+        @livewire('trending.components.media-grid')
+
+    </div>
 
 </x-app-layout>

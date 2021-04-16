@@ -1,5 +1,5 @@
 <div class="container mx-auto px-4" wire:init="loadMedia">
-    <div class="grid grid-cols-2 laptop:grid-cols-5 desktop:grid-cols-6 grid-flow-row gap-4">
+    <div class="grid grid-cols-2 tablet:grid-cols-3 laptop:grid-cols-5 desktop:grid-cols-6 grid-flow-row gap-4">
         @if ($media)
             @foreach ($media as $item)
                 {{-- @if ($loop->even)
@@ -12,7 +12,7 @@
                         </div>
                     </div>
                 @else --}}
-                <div class="space-y-2" wire:click="test({{ $item['id'] }})">
+                <div class="space-y-2" x-on:click="openModal({{ $item['id'] }})">
                     <div>
                         <img class="rounded" src="https://image.tmdb.org/t/p/w220_and_h330_face{{ $item['poster_path'] ?? $item['profile_path'] }}" loading="lazy">
                     </div>
@@ -37,21 +37,26 @@
     <div class="justify-center w-full my-10" wire:loading.flex>
         <x-loading size="20" />
     </div>
+
+    @livewire('components.modals.media-modal')
 </div>
+
 
 @push('scripts')
     <script>
-        var lastLoadTime = 0;
+        var lastLoadTime = 0
 
-        window.onscroll = function(ev) {
-            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+        window.onscroll = function(e) {
+            if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
+
+                console.log('now');
                 var now = new Date();
                 if (now - lastLoadTime >= 1000) {
                     Livewire.emit('loadMore')
                     lastLoadTime = now;
                 }
             }
-        };
+        }
 
     </script>
 @endpush

@@ -11,6 +11,8 @@ class MediaGrid extends Component
     public $type;
     public $page;
 
+    public $modalIsOpen;
+
     protected $listeners = ['setMediaType', 'loadMore'];
 
     public function mount()
@@ -41,8 +43,9 @@ class MediaGrid extends Component
         $this->loadMedia();
     }
 
-    public function test($id)
+    public function openModal($tmdbId)
     {
-        $this->emit('openMediaModal', $id);
+        $this->dispatchBrowserEvent('modal', $tmdbId);
     }
+
 }

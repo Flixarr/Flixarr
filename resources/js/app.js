@@ -1,3 +1,9 @@
 require('./bootstrap');
 
-require('alpinejs');
+import 'alpinejs'
+
+
+/**
+ * Components
+ */
+// import './components/modal';

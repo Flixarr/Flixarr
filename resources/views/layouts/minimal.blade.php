@@ -34,9 +34,6 @@
         <main class="space-y-4 my-4">
             {{ $slot }}
         </main>
-
-        {{-- Modals stack --}}
-        @stack('modals')
     </div>
 
     <x-notification />
