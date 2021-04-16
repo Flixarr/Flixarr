@@ -1,3 +1,0 @@
-require('./bootstrap');
-
-import 'alpinejs'
