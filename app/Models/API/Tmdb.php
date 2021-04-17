@@ -12,6 +12,10 @@ class Tmdb extends Model
 
     public function __construct()
     {
+        if (empty(config('tmdb.api_key'))) {
+            abort(500, 'TMDB API Key is missing');
+        }
+
         $this->url = 'https://api.themoviedb.org/3';
         $this->params = [
             'api_key' => config('tmdb.api_key'),
