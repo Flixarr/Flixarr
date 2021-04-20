@@ -22,7 +22,7 @@
 
 </head>
 
-<body class="font-sans antialiased bg-gray-900 text-white" id="body-content" x-data="modal()" :class="{ 'overflow-hidden' : modalIsOpen === true }">
+<body class="font-sans antialiased bg-gray-900 text-gray-300 tracking-wider leading-none" id="body-content" x-data="{bodyModalOpen: false}" :class="{ 'overflow-hidden' : bodyModalOpen === true }" @lockBody.window="console.log('test')">
 
     {{-- Responsive State Indicator --}}
     <div class="absolute top-0 bg-blue-500 text-center text-xs z-50">

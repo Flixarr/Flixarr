@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\API\Tmdb;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /**
@@ -21,12 +23,16 @@ Route::prefix('setup')->group(function () {
 });
 
 Route::middleware(['setup'])->group(function () {
-    Route::redirect('/', '/trending');
+    Route::name('index')->get('/', [App\Http\Controllers\Index\IndexController::class, 'view']);
 
     Route::prefix('trending')->group(function () {
         Route::name('trending')->get('/', [App\Http\Controllers\Trending\TrendingController::class, 'view']);
     });
 });
+
+Route::get('/tmdb/{endpoint}', function (Request $params, $endpoint) {
+    return (new Tmdb)->test($endpoint, $params);
+})->where('endpoint', '(.*)');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

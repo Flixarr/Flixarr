@@ -11,8 +11,8 @@ class Filter extends Component
         return view('web.trending.components.filter');
     }
 
-    public function setMediaType($type)
+    public function setMediaType($mediaType)
     {
-        $this->emit('setMediaType', $type);
+        $this->emit('setMediaType', $mediaType);
     }
 }

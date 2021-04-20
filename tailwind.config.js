@@ -25,8 +25,7 @@ module.exports = {
             red: colors.red,
             blue: colors.blue,
             green: colors.green,
-            //
-            indigo: colors.indigo,
+            yellow: colors.yellow,
         },
 
         screens: {
@@ -93,6 +92,8 @@ module.exports = {
 
     plugins: [
         require('@tailwindcss/forms'),
+        require('@tailwindcss/line-clamp'),
+        require('@tailwindcss/typography'),
         require('tailwindcss-textshadow'),
     ],
 };

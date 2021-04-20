@@ -12,7 +12,7 @@
                         </div>
                     </div>
                 @else --}}
-                <div class="space-y-2" x-on:click="openModal({{ $item['id'] }})">
+                <div class="space-y-2" x-data="{ tmdbId: '{{ $item['id'] }}', mediaType: '{{ $mediaType }}' }" x-on:click="$dispatch('modal', { tmdbId: tmdbId, mediaType: mediaType })">
                     <div>
                         <img class="rounded" src="https://image.tmdb.org/t/p/w220_and_h330_face{{ $item['poster_path'] ?? $item['profile_path'] }}" loading="lazy">
                     </div>
@@ -45,11 +45,8 @@
 @push('scripts')
     <script>
         var lastLoadTime = 0
-
         window.onscroll = function(e) {
             if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
-
-                console.log('now');
                 var now = new Date();
                 if (now - lastLoadTime >= 1000) {
                     Livewire.emit('loadMore')

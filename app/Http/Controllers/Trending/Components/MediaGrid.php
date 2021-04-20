@@ -8,7 +8,7 @@ use Livewire\Component;
 class MediaGrid extends Component
 {
     public $media;
-    public $type;
+    public $mediaType;
     public $page;
 
     public $modalIsOpen;
@@ -17,7 +17,7 @@ class MediaGrid extends Component
 
     public function mount()
     {
-        $this->type = 'movie';
+        $this->mediaType = 'movie';
         $this->page = 1;
     }
 
@@ -28,18 +28,18 @@ class MediaGrid extends Component
 
     public function loadMedia()
     {
-        $this->media = (new Tmdb)->getTrending($this->type)['results'];
+        $this->media = (new Tmdb)->getTrending($this->mediaType)['results'];
     }
 
     public function loadMore()
     {
         $this->page++;
-        $this->media = array_merge($this->media, (new Tmdb)->getTrending($this->type, $this->page)['results']);
+        $this->media = array_merge($this->media, (new Tmdb)->getTrending($this->mediaType, $this->page)['results']);
     }
 
-    public function setMediaType($type)
+    public function setMediaType($mediaType)
     {
-        $this->type = $type;
+        $this->mediaType = $mediaType;
         $this->loadMedia();
     }
 
