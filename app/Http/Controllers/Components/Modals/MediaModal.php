@@ -28,18 +28,20 @@ class MediaModal extends Component
         $this->removeVideosThatAreNotOnYoutube();
     }
 
-    public function close()
+    public function resetModal()
     {
-        $this->media = [];
+        $this->media = null;
     }
 
     public function buildMediaInfo()
     {
         // get director
-        foreach ($this->media['credits']['crew'] as $crew) {
-            if ($crew['job'] === "Director") {
-                $this->media['director']['id'] = $crew['id'];
-                $this->media['director']['name'] = $crew['name'];
+        if (isset($media['credits'])) {
+            foreach ($this->media['credits']['crew'] as $crew) {
+                if ($crew['job'] === "Director") {
+                    $this->media['director']['id'] = $crew['id'];
+                    $this->media['director']['name'] = $crew['name'];
+                }
             }
         }
     }
@@ -55,6 +57,7 @@ class MediaModal extends Component
 
         }
         $this->media['videos'] = $videos;
+
     }
 
 }

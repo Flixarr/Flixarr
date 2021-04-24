@@ -16,7 +16,7 @@ class NetflixTv extends Component
 
     public function loadNetflixTv()
     {
-        $this->netflixMedia = (new Tmdb)->mediaByProvider('amazon', 'tv')['results'];
+        $this->netflixMedia = (new Tmdb)->mediaByProvider('amazon', 'movie')['results'];
 
         // dd($this->netflixMedia);
 

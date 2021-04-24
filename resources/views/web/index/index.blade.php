@@ -6,8 +6,9 @@
 
         @livewire('index.components.netflix-tv')
 
-        @livewire('components.modals.media-modal')
 
     </div>
+
+    @livewire('components.modals.media-modal')
 
 </x-app-layout>

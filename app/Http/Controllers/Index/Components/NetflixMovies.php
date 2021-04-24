@@ -16,8 +16,7 @@ class NetflixMovies extends Component
 
     public function loadNetflixMovies()
     {
-        sleep(2);
-        $this->netflixMedia = (new Tmdb)->discover('movie', ['watch_region' => 'US', 'with_watch_providers' => '8'])['results'];
+        $this->netflixMedia = (new Tmdb)->mediaByProvider('netflix', 'movie')['results'];
     }
 
 }

@@ -163,6 +163,7 @@
                 },
                 close($dispatch) {
                     this.modalIsOpen = false
+                    @this.resetModal();
                 }
             }
         }
