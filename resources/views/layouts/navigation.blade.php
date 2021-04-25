@@ -13,8 +13,12 @@
                 <div class="hidden laptop:block laptop:ml-6">
                     <div class="flex space-x-4">
                         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                        <a href="#" class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium">Discover</a>
-                        <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Other</a>
+                        <a href="/" class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium">
+                            Discover
+                        </a>
+                        <a href="/trending" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                            Trending
+                        </a>
                     </div>
                 </div>
             </div>
