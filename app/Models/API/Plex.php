@@ -105,8 +105,8 @@ class Plex extends Model
             return ($status === 200) ? true : false;
         }
 
-        return false;
-    }
+    //     return false;
+    // }
 
     /**
      * Returns an auth pin

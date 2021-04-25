@@ -28,7 +28,6 @@ Route::middleware(['setup'])->group(function () {
     Route::prefix('trending')->group(function () {
         Route::name('trending')->get('/', [App\Http\Controllers\Trending\TrendingController::class, 'view']);
     });
-});
 
 Route::get('/tmdb/{endpoint}', function (Request $params, $endpoint) {
     return (new Tmdb)->test($endpoint, $params);
