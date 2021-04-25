@@ -28211,13 +28211,23 @@ select {
 }
 
 .scroll-x {
+  /* scroll-behavior: smooth; */
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
-  /* scroll-behavior: smooth; */
   -webkit-overflow-scrolling: touch;
 }
 
 .scroll-x::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+  -webkit-overflow-scrolling: touch;
+}
+
+.no-scrollbar::-webkit-scrollbar {
   display: none;
 }
 

@@ -94,7 +94,7 @@
                                     {{-- Videos --}}
                                     @if (isset($media['videos']))
                                         <div class="overflow-hidden max-w-full">
-                                            <div class="flex overflow-x-scroll no-scrollbar px-4">
+                                            <div class="flex overflow-x-scroll scroll-x px-4">
                                                 @foreach ($media['videos'] as $video)
                                                     <div class="relative flex-shrink-0 mr-4 pb-[56.25%] pt-[30px] h-52 w-{{ $loop->count > 1 ? '4/5' : 'full' }} overflow-hidden">
                                                         <iframe class="absolute top-0 left-0 w-full" width="420" height="200" src="https://www.youtube.com/embed/{{ $video['key'] }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
