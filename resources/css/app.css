@@ -1,15 +1,23 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 
-@responsive {
-    .hide-scroll-bar {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
+
+@layer utilities {
+    .scroll-x {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+        /* scroll-behavior: smooth; */
         -webkit-overflow-scrolling: touch;
     }
 
-    .hide-scroll-bar::-webkit-scrollbar {
+    .scroll-x::-webkit-scrollbar {
         display: none;
+    }
+}
+
+@layer base {
+    .text-muted {
+        @apply text-gray-500;
     }
 }

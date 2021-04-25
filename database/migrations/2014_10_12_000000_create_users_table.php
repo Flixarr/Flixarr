@@ -15,19 +15,10 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('first_name')->nullable();
-            $table->string('last_name')->nullable();
-            $table->string('email')->nullable();
-            $table->string('password')->nullable();
-            $table->boolean('require_password')->default(0);
-            $table->boolean('setup')->default(0);
-            $table->string('plex_id')->nullable();
-            $table->string('plex_uuid')->nullable();
-            $table->string('plex_joined_at')->nullable();
-            $table->string('plex_username')->nullable();
-            $table->string('plex_title')->nullable();
-            $table->string('plex_thumb')->nullable();
-            $table->string('plex_token')->nullable();
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->string('auth_token')->nullable();
+            $table->rememberToken();
             $table->timestamps();
         });
     }
