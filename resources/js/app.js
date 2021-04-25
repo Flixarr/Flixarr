@@ -2,13 +2,14 @@ require('./bootstrap');
 
 import 'alpinejs'
 
-/**
- * Scroll hostizontally
- */
+/* ------------------- */
+/* Scroll horizontally */
+/* ------------------- */
 
-document.querySelector(".scroll-h").addEventListener('wheel', (e) => {
-    document.querySelector(".scroll-h").scrollLeft += e.deltaY;
-})
+document.querySelectorAll('.scroll-x').forEach(function (element, index) {
+    element.addEventListener('wheel', (e) => {
+        element.scrollLeft += (e.deltaY * 0.5)
+    })
+});
 
-
-
+/* ------------------- */

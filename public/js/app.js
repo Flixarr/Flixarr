@@ -3805,13 +3805,18 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
-/**
- * Scroll hostizontally
- */
+/* ------------------- */
 
-document.querySelector(".scroll-h").addEventListener('wheel', function (e) {
-  document.querySelector(".scroll-h").scrollLeft += e.deltaY;
+/* Scroll horizontally */
+
+/* ------------------- */
+
+document.querySelectorAll('.scroll-x').forEach(function (element, index) {
+  element.addEventListener('wheel', function (e) {
+    element.scrollLeft += e.deltaY * 0.5;
+  });
 });
+/* ------------------- */
 
 /***/ }),
 

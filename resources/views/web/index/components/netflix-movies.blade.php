@@ -2,8 +2,10 @@
     <div class="px-4">
         <h1>Popular Movies on Netflix</h1>
     </div>
+
     <div class="" x-data="netflixMovies()">
-        <div class="flex overflow-x-scroll no-scrollbar scroll-h" wire:loading.remove>
+
+        <div class="flex overflow-x-scroll no-scrollbar scroll-x" wire:loading.remove>
             <div class="flex flex-nowrap ml-4 pr-4 space-x-4">
                 @if ($netflixMedia)
                     @foreach ($netflixMedia as $media)
@@ -15,7 +17,7 @@
                 @endif
             </div>
         </div>
-        <div class="flex overflow-x-scroll hide-scroll-bar " wire:loading>
+        <div class="flex overflow-x-scroll no-scrollbar" wire:loading>
             <div class="flex flex-nowrap ml-4 pr-4 space-x-4 animate-pulse">
                 <div class="w-32 h-48 rounded bg-gray-800"></div>
                 <div class="w-32 h-48 rounded bg-gray-800"></div>

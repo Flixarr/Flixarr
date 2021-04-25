@@ -51,33 +51,16 @@
             console.log(event.detail.data);
         })
 
-        var mouseWheelEvt = function(event) {
-            if (this.doScroll) {
-                console.log('yes');
-            } else {
-                console.log('no');
-            }
-
-            // if (document.d.doScroll)
-            //     document.d.doScroll(event.wheelDelta > 0 ? "left" : "right");
-            // else if ((event.wheelDelta || event.detail) > 0)
-            //     document.d.scrollLeft -= 10;
-            // else
-            //     document.d.scrollLeft += 10;
-
-            // return false;
-        }
-
         // document.querySelector(".scroll-h").addEventListener('mousewheel', mouseWheelEvt)
 
-        document.querySelector(".scroll-h").addEventListener('wheel', (e) => {
-            document.querySelector(".scroll-h").scrollLeft += e.deltaY;
-        })
+        // document.querySelector(".scroll-h").addEventListener('wheel', (e) => {
+        //     document.querySelector(".scroll-h").scrollLeft += e.deltaY;
+        // })
 
-        // var scrollDivs = document.getElementsByClassName('scroll-h');
-        // for (var i = 0; i < scrollDivs.length; i++) {
-        //     scrollDivs[i].addEventListener("mousewheel", mouseWheelEvt);
-        // }
+        // // var scrollDivs = document.getElementsByClassName('scroll-h');
+        // // for (var i = 0; i < scrollDivs.length; i++) {
+        // //     scrollDivs[i].addEventListener("mousewheel", mouseWheelEvt);
+        // // }
 
     </script>
 </body>
