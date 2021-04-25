@@ -28214,6 +28214,7 @@ select {
 
 .no-scrollbar::-webkit-scrollbar {
   display: none;
+  scroll-behavior: smooth;
 }
 
 /* Hide scrollbar for IE, Edge and Firefox */
@@ -28221,6 +28222,7 @@ select {
 .no-scrollbar {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
+  scroll-behavior: smooth;
 }
 
 @media (min-width: 321px) {
