@@ -1,0 +1,14 @@
+{
+    // other
+    "files.insertFinalNewline": true,
+    "emmet.triggerExpansionOnTab": true, // enable tab to expanse emmet tags
+    // formating
+    "html.format.wrapLineLength": 0,
+    "editor.formatOnSave": true,
+    "blade.format.enable": true, // if you would like to enable blade format
+    // file association
+    "[blade]": {
+        "editor.defaultFormatter": "shufo.vscode-blade-formatter",
+        "editor.autoClosingBrackets": "always"
+    },
+}

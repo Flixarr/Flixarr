@@ -1,0 +1,46 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@import '../../node_modules/@splidejs/splide/dist/css/themes/splide-default.min.css';
+
+
+@layer utilities {
+    .scroll-x {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+        /* scroll-behavior: smooth; */
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .scroll-x::-webkit-scrollbar {
+        display: none;
+    }
+
+    .ios-padding {
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+        padding-left: env(safe-area-inset-left);
+        padding-right: env(safe-area-inset-right);
+    }
+    .ios-padding-top {
+        padding-top: env(safe-area-inset-top);
+    }
+    .ios-padding-bottom {
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+    .ios-padding-left {
+        padding-left: env(safe-area-inset-left);
+    }
+    .ios-padding-right {
+        padding-right: env(safe-area-inset-right);
+    }
+    .ios-padding-y {
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+    .ios-padding-x {
+        padding-left: env(safe-area-inset-left);
+        padding-right: env(safe-area-inset-right);
+    }
+}
