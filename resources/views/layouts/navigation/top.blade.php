@@ -1,6 +1,6 @@
 <nav class="fixed top-0 w-full bg-gray-800 z-50">
     <div class="ios-padding-x">
-        <div class="max-w-7xl mx-auto px-2">
+        <div class="max-w-6xl mx-auto px-2">
             <div class="relative flex items-center justify-between h-16">
                 {{-- Logo & Navigation Menu --}}
                 <div class="flex items-center px-2">

@@ -2,7 +2,7 @@ const defaultTheme = require('tailwindcss/defaultTheme');
 const colors = require('tailwindcss/colors');
 
 module.exports = {
-    mode: 'jit',
+    // mode: 'jit',
     // important: true,
     purge: {
         mode: 'all',
@@ -29,6 +29,7 @@ module.exports = {
             blue: colors.blue,
             green: colors.green,
             yellow: colors.yellow,
+            orange: colors.orange,
         },
 
         fontSize: {

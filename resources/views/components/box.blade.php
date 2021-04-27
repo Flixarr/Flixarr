@@ -1,7 +1,7 @@
-<div class="bg-gray-800 p-4 space-y-4 my-4" {{ $attributes }}>
+<div class="bg-gray-800 p-4 space-y-4 my-4 xl:rounded-lg" {{ $attributes }}>
     <div class="ios-padding-x">
         <div class="flex justify-between items-start uppercase">
-            <h1 class="font-bold">{{ $title }}</h1>
+            <h1 class="font-bold">{!! $title !!}</h1>
             @if ($moreLink)
                 <a class="flex items-center space-x-1 text-gray-500 text-2xs" href="/{{ $moreLink }}">
                     <span>See all</span>
