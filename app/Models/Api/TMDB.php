@@ -41,6 +41,9 @@ class TMDB extends Model
      * Utilities
      */
 
+    /**
+     * A function to test any endpoint with params by visiting /test/tmdb/{endpoint}?{params}
+     */
     public function test($endpoint = null, $params = null)
     {
         $params = $params->all();
@@ -54,14 +57,36 @@ class TMDB extends Model
         return $this->call('/' . $endpoint);
     }
 
-    public static function addImageUrl($backdropPath)
+    /**
+     * Prepends the TMDB Image URL
+     */
+    public static function addImageUrlsToMediaObject($media)
     {
-        return 'https://image.tmdb.org/t/p/w500' . $backdropPath;
+        $imageUrl = 'https://image.tmdb.org/t/p/w500';
+
+        if (isset($media['backdrop_path'])) {
+            $media['backdrop_path'] = $imageUrl . $media['backdrop_path'];
+        }
+
+        if (isset($media['poster_path'])) {
+            $media['poster_path'] = $imageUrl . $media['poster_path'];
+        }
+
+        return $media;
     }
 
     /**
-     *
+     * Media
      */
+
+    public function getMedia($tmdbId, $mediaType)
+    {
+        $media = $this->call('/' . $mediaType . '/' . $tmdbId);
+
+        $media = $this->addImageUrlsToMediaObject($media);
+
+        return $media;
+    }
 
     public function returnTrendingMedia($mediaType = 'all', $timeWindow = 'day', $page = null)
     {

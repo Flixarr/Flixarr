@@ -1,9 +1,9 @@
 <nav class="fixed top-0 w-full bg-gray-800 z-50">
     <div class="ios-padding-x">
-        <div class="max-w-6xl mx-auto px-2">
+        <div class="max-w-screen-xl mx-auto px-2 lg:pr-4 xl:px-0">
             <div class="relative flex items-center justify-between h-16">
                 {{-- Logo & Navigation Menu --}}
-                <div class="flex items-center px-2">
+                <div class="flex items-center px-2 xl:px-0">
                     {{-- Logo --}}
                     <div class="flex-shrink-0">
                         <img class="block lg:hidden h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg" alt="Workflow">
@@ -31,7 +31,7 @@
                                     <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
                                 </svg>
                             </div>
-                            <input id="search" name="search" class="block w-full pl-10 pr-3 py-2 border border-transparent rounded-md leading-5 bg-gray-700 text-gray-300 placeholder-gray-400 focus:outline-none focus:bg-white focus:border-white focus:ring-white focus:text-gray-900 text-sm" placeholder="Search for movies and tv shows..." type="search">
+                            <input id="search" name="search" class="block w-full pl-10 pr-3 py-2 border border-transparent rounded-md leading-5 bg-gray-700 text-gray-300 placeholder-gray-400 focus:outline-none focus:bg-white focus:border-white focus:ring-white focus:text-gray-900 text-sm" placeholder="Search..." type="search">
                         </div>
                     </div>
                 </div>
@@ -50,7 +50,7 @@
                 </div>
 
                 {{-- User & Notifications --}}
-                <div class="hidden lg:block px-2">
+                <div class="hidden lg:block px-2 lg:pr-4 xl:px-0">
                     <div class="flex items-center">
                         {{-- Notifications --}}
                         <button class="flex-shrink-0 bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">

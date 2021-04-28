@@ -1,9 +1,10 @@
 <x-box title="{{ $title }}" moreLink="{{ $moreLink }}" wire:init="load">
     <div class="flex overflow-x-auto -mx-4 px-4 py-1 space-x-4 scroll-x" wire:loading.remove>
         @foreach ($media as $item)
-            <div class="min-w-max rounded-lg bg-gray-700 overflow-hidden">
+            <x-media.poster tmdbId="{{ $item['id'] }}" mediaType="{{ $mediaType }}" />
+            {{-- <div class="min-w-max rounded-lg bg-gray-700 overflow-hidden">
                 <img class="h-52 w-36 bg-cover" src="{{ App\Models\Api\TMDB::addImageUrl($item['poster_path']) }}" alt="">
-            </div>
+            </div> --}}
             @if ($loop->last)
                 <div class="">&nbsp;</div>
             @endif

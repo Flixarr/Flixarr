@@ -4,7 +4,7 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class button extends Component
+class Button extends Component
 {
     public $text;
     public $width;
