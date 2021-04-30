@@ -4,14 +4,14 @@
 
 
 @layer utilities {
-    .scroll-x {
+    .no-scrollbar {
         -ms-overflow-style: none;  /* IE and Edge */
         scrollbar-width: none;  /* Firefox */
         /* scroll-behavior: smooth; */
         -webkit-overflow-scrolling: touch;
     }
 
-    .scroll-x::-webkit-scrollbar {
+    .no-scrollbar::-webkit-scrollbar {
         display: none;
     }
 }
