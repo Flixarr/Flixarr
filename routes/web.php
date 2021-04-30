@@ -1,15 +1,11 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 /**
  * Frontend Routes
  */
-include 'frontend.php';
 
-/**
- * Setup Routes
- */
-
-
-/**
- * Backend/Admin Routes
-*/
+Route::middleware(['auth'])->group(function () {
+    Route::get('/', App\Http\Controllers\Discover\Discover::class);
+});
