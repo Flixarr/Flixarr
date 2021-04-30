@@ -1,7 +1,7 @@
-<div class="lg:hidden fixed bottom-0 w-full bg-gray-800 text-gray-400">
+<div class="lg:hidden fixed bottom-0 w-full bg-gray-800 text-gray-400 -mb-px">
     <div class="ios-padding-bottom ios-padding-x">
-        <div class="px-4 py-2">
-            <div class="flex items-center justify-between px-4 text-xs">
+        <div class="px-4 py-4">
+            <div class="flex items-center justify-between px-4 text-xs font-semibold">
                 <div class="flex flex-col items-center space-y-1">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                         <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />

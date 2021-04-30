@@ -1,46 +1,25 @@
 <x-box title="{{ $title }}" moreLink="{{ $moreLink }}" wire:init="load">
-    <div class="flex overflow-x-auto -mx-4 px-4 py-1 space-x-4 scroll-x" wire:loading.remove>
-        @foreach ($media as $item)
-            <x-media.poster tmdbId="{{ $item['id'] }}" mediaType="{{ $mediaType }}" />
-            {{-- <div class="min-w-max rounded-lg bg-gray-700 overflow-hidden">
-                <img class="h-52 w-36 bg-cover" src="{{ App\Models\Api\TMDB::addImageUrl($item['poster_path']) }}" alt="">
-            </div> --}}
-            @if ($loop->last)
-                <div class="">&nbsp;</div>
-            @endif
-        @endforeach
+    <div wire:loading.remove>
+        <div class="relative scroll-x px-4 -my-4 py-4 space-x-2">
+            @foreach ($media as $item)
+                @livewire('components.media.poster', ['tmdbId' => $item['id'], 'mediaType' => $mediaType])
+                {{-- <x-media.poster tmdbId="{{ $item['id'] }}" mediaType="{{ $mediaType }}" /> --}}
+            @endforeach
+        </div>
     </div>
 
-    <div class="overflow-x-auto -mx-4 px-4 py-1 space-x-4 scroll-x animate-pulse" wire:loading.flex>
-        <div class="min-w-max rounded-lg bg-gray-700 overflow-hidden">
-            <div class="h-52 w-36"></div>
-        </div>
-        <div class="min-w-max rounded-lg bg-gray-700 overflow-hidden">
-            <div class="h-52 w-36"></div>
-        </div>
-        <div class="min-w-max rounded-lg bg-gray-700 overflow-hidden">
-            <div class="h-52 w-36"></div>
-        </div>
-        <div class="min-w-max rounded-lg bg-gray-700 overflow-hidden">
-            <div class="h-52 w-36"></div>
-        </div>
-        <div class="min-w-max rounded-lg bg-gray-700 overflow-hidden">
-            <div class="h-52 w-36"></div>
-        </div>
-        <div class="min-w-max rounded-lg bg-gray-700 overflow-hidden">
-            <div class="h-52 w-36"></div>
-        </div>
-        <div class="min-w-max rounded-lg bg-gray-700 overflow-hidden">
-            <div class="h-52 w-36"></div>
-        </div>
-        <div class="min-w-max rounded-lg bg-gray-700 overflow-hidden">
-            <div class="h-52 w-36"></div>
-        </div>
-        <div class="min-w-max rounded-lg bg-gray-700 overflow-hidden">
-            <div class="h-52 w-36"></div>
-        </div>
-        <div class="min-w-max rounded-lg bg-gray-700 overflow-hidden">
-            <div class="h-52 w-36"></div>
+
+    <div wire:loading.flex>
+        <div class="relative scroll-x px-4 space-x-2 animate-pulse">
+            <div class="inline-block poster bg-gray-700 rounded-lg"></div>
+            <div class="inline-block poster bg-gray-700 rounded-lg"></div>
+            <div class="inline-block poster bg-gray-700 rounded-lg"></div>
+            <div class="inline-block poster bg-gray-700 rounded-lg"></div>
+            <div class="inline-block poster bg-gray-700 rounded-lg"></div>
+            <div class="inline-block poster bg-gray-700 rounded-lg"></div>
+            <div class="inline-block poster bg-gray-700 rounded-lg"></div>
+            <div class="inline-block poster bg-gray-700 rounded-lg"></div>
+            <div class="inline-block poster bg-gray-700 rounded-lg"></div>
         </div>
     </div>
 </x-box>

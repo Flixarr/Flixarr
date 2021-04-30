@@ -26,7 +26,7 @@ class TMDB extends Model
         ];
     }
 
-    public function call(string $endpoint, array $params = [])
+    public function call(string $endpoint, array $params = [], bool $fullResponse = false)
     {
         if ($params) {
             foreach ($params as $key => $value) {
@@ -34,7 +34,14 @@ class TMDB extends Model
             }
         }
 
-        return Http::get($this->url . $endpoint, $this->params)->json();
+        $response = Http::get($this->url . $endpoint, $this->params);
+
+        if ($fullResponse) {
+            return $response;
+        } else {
+            return $response->json();
+        }
+
     }
 
     /**
@@ -79,7 +86,7 @@ class TMDB extends Model
      * Media
      */
 
-    public function getMedia($tmdbId, $mediaType)
+    public function getMedia($tmdbId, $mediaType, )
     {
         $media = $this->call('/' . $mediaType . '/' . $tmdbId);
 

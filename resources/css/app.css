@@ -6,7 +6,18 @@
 
 
 @layer utilities {
+    .text-muted {
+        @apply text-gray-400;
+    }
+
+    .poster {
+        /* @apply bg-gray-700 rounded-lg overflow-hidden bg-cover bg-center; */
+        width: 144px;
+        height: 216px;
+    }
+
     .scroll-x {
+        @apply overflow-x-auto whitespace-nowrap;
         -ms-overflow-style: none;  /* IE and Edge */
         scrollbar-width: none;  /* Firefox */
         /* scroll-behavior: smooth; */

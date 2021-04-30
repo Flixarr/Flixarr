@@ -1,5 +1,6 @@
 require('./bootstrap');
 
+import 'alpinejs';
 
 document.querySelectorAll('.scroll-x').forEach(function (element, index) {
     element.addEventListener('wheel', (e) => {
@@ -25,7 +26,6 @@ window.addEventListener('createMediaBackdropSlider', event => {
         var backdrop_path = item.backdrop_path
         var title = (item.title || item.name)
         var date = (item.release_date || item.first_air_date || '0000')
-
 
         splide.add('' +
             '<li class="splide__slide rounded-lg overflow-hidden"> ' +

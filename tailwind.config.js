@@ -6,7 +6,7 @@ module.exports = {
     // important: true,
     purge: {
         mode: 'all',
-        preserveHtmlElements: false,
+        preserveHtmlElements: true,
         content: [
             './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
             './storage/framework/views/*.php',
@@ -76,12 +76,21 @@ module.exports = {
             fontFamily: {
                 sans: ['Nunito', ...defaultTheme.fontFamily.sans],
             },
+            brightness: {
+                '25': '0.25',
+            }
         },
     },
 
     variants: {
         extend: {
-            //
+            scale: ['hover'],
+            blur: ['group-hover'],
+            brightness: ['group-hover'],
+            opacity: ['group-hover'],
+
+            borderWidth: ['group-hover'],
+            pointerEvents: ['focus', 'hover', 'group-focus', 'group-hover'],
         },
     },
 

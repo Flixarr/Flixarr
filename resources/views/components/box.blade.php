@@ -1,6 +1,6 @@
-<div class="bg-gray-800 p-4 space-y-4 my-4 xl:rounded-lg" {{ $attributes }}>
+<div class="bg-gray-800 xl:rounded-lg py-4 space-y-4" {{ $attributes }}>
     <div class="ios-padding-x">
-        <div class="flex justify-between items-start uppercase">
+        <div class="flex justify-between items-start uppercase px-4">
             <h1 class="font-bold text-base">{!! $title !!}</h1>
             @if ($moreLink)
                 <a class="flex items-center space-x-1 text-gray-500 text-2xs" href="/{{ $moreLink }}">
@@ -13,7 +13,7 @@
         </div>
     </div>
 
-    <div class="">
+    <div class="relative">
         {{ $slot }}
     </div>
 </div>
