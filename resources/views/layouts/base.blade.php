@@ -23,7 +23,12 @@
 <body class="bg-gray-900 text-gray-300 text-sm tracking-wider leading-none font-sans w-full">
     {{-- Responsive State Indicator --}}
 
-    {{ $slot }}
+    @hasSection('content')
+        @yield('content')
+    @else
+        {{ $slot }}
+    @endif
+
     <div class="fixed bottom-0 bg-blue-500 text-xs z-50 uppercase p-2">
         <div class="sm:hidden">xs</div>
         <div class="hidden sm:block md:hidden">sm</div>

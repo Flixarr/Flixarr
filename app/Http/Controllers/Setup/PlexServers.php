@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Setup;
 
 use App\Models\API\Plex;
 use Livewire\Component;
 
-class Login extends Component
+class PlexServers extends Component
 {
     // States
     public $loading = false;

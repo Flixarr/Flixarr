@@ -6,15 +6,28 @@
 
 
 @layer utilities {
+
+    /* Typography */
     .text-muted {
         @apply text-gray-400;
     }
+    /* End Typography */
 
+    /* -------------------- */
+
+    /* Elements */
     .poster {
         /* @apply bg-gray-700 rounded-lg overflow-hidden bg-cover bg-center; */
         width: 144px;
         height: 216px;
     }
+    .button {
+        @apply bg-blue-500 py-2 px-4 font-bold focus:outline-none focus:bg-blue-600 rounded;
+    }
+
+    /* End Elements */
+
+    /* -------------------- */
 
     .scroll-x {
         @apply overflow-x-auto whitespace-nowrap;

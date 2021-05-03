@@ -14,7 +14,7 @@ class Box extends Component
      *
      * @return void
      */
-    public function __construct(string $title, string $moreLink = null)
+    public function __construct(string $title = null, string $moreLink = null)
     {
         $this->title = $title;
         $this->moreLink = $moreLink;

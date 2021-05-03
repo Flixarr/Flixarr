@@ -6,6 +6,7 @@ use Illuminate\View\Component;
 
 class AppLayout extends Component
 {
+    public $type;
     public $hasTopNavigation;
     public $hasBottomNavigation;
 
@@ -14,8 +15,9 @@ class AppLayout extends Component
      *
      * @return void
      */
-    public function __construct($hasTopNavigation = false, $hasBottomNavigation = false)
+    public function __construct($type = null, $hasTopNavigation = false, $hasBottomNavigation = false)
     {
+        $this->type = $type;
         $this->hasTopNavigation = $hasTopNavigation;
         $this->hasBottomNavigation = $hasBottomNavigation;
     }
@@ -27,6 +29,10 @@ class AppLayout extends Component
      */
     public function render()
     {
+        if ($this->type === 'minimal') {
+            return view('layouts.minimal');
+        }
+
         return view('layouts.app');
     }
 }
