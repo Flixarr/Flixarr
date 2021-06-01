@@ -1,0 +1,34 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+
+    [x-cloak] {
+        display: none !important;
+    }
+    
+    .link {
+        @apply text-gray-300 cursor-pointer hover:text-primary;
+    }
+
+    .validation {
+        @apply border-l-2 border-transparent;
+    }
+    
+    .has-error {
+        @apply pl-2 border-l-4 border-red-500 rounded;
+    }
+
+    .no-scrollbar {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+        /* scroll-behavior: smooth; */
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+    
+}
